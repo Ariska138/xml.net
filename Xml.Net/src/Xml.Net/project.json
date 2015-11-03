@@ -1,10 +1,13 @@
 {
     "version": "1.0.0-*",
-    "description": "Xml.Net Class Library",
-    "authors": [ "Hugh" ],
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
+    "title": "Xml.Net",
+    "summary": "A high performance XML serialization library for .NET applications",
+    "description": "A high performance XML serialization library for .NET applications",
+    "authors": [ "Hugh Bellamy" ],
+    "copyright": "(C) Hugh Bellamy 2015",
+    "tags": [ "xml xml.net serialization serializer xmlserializer" ],
+    "projectUrl": "https://github.com/hughbe/xml.net",
+    "licenseUrl": "https://raw.githubusercontent.com/hughbe/xml.net/master/LICENSE",
 
     "dependencies": {
         "System.Collections": "4.0.10",
