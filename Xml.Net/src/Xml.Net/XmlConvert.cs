@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -71,7 +72,8 @@ namespace Xml.Net
 
         private static bool IsList(Type type)
         {
-            return typeof(IList).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IList).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
+                || typeof(IReadOnlyList<>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
 
         private static bool IsDictionary(object obj)

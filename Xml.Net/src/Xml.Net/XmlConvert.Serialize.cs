@@ -45,7 +45,11 @@ namespace Xml.Net
         }
 
         private static void SerializeProperty(PropertyInfo property, object obj, XElement parent, XmlConvertOptions options)
-        {            
+        {
+            if (property == null) { return; }
+            if (obj == null) { return; }
+            if (parent == null) { return; }
+
             if (IsIgnoredProperty(property))
             {
                 return;
@@ -76,7 +80,9 @@ namespace Xml.Net
 
         private static void SerializeObjectInternal(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames, string keyNames, string valueNames)
         {
+            if (name == null) { return; }
             if (obj == null) { return; }
+            if (parent == null) { return; }
 
             if (IsFundamentalPrimitive(obj))
             {
@@ -100,6 +106,10 @@ namespace Xml.Net
 
         private static void SerializeFundamentalPrimitive(string name, object obj, XElement parent, XmlConvertOptions options)
         {
+            if (name == null) { return; }
+            if (obj == null) { return; }
+            if (parent == null) { return; }
+
             var stringValue = Convert.ToString(obj);
             var element = new XElement(name, stringValue);
 
@@ -108,6 +118,10 @@ namespace Xml.Net
 
         private static void SerializeList(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames)
         {
+            if (name == null) { return; }
+            if (obj == null) { return; }
+            if (parent == null) { return; }
+
             var element = new XElement(name);
 
             var list = (IList)obj;
@@ -121,7 +135,11 @@ namespace Xml.Net
                 
         private static void SerializeDictionary(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames, string keyNames, string valueNames)
         {
-            //TODO: Serialize Dictionaries
+            if (name == null) { return; }
+            if (obj == null) { return; }
+            if (parent == null) { return; }
+            if (elementNames == null) { return; }
+
             var element = new XElement(name);
 
             var dictionary = (IDictionary)obj;
@@ -138,10 +156,9 @@ namespace Xml.Net
             SetupSerializedElement(obj, element, parent, options);
         }
 
-
         private static bool IsIgnoredProperty(PropertyInfo property)
         {
-            return property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null;
+            return property == null || property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null;
         }
 
         private static string GetCollectionElementName(PropertyInfo property)
@@ -181,6 +198,10 @@ namespace Xml.Net
 
         private static void SetupSerializedElement(object obj, XElement element, XElement parent, XmlConvertOptions options)
         {
+            if (obj == null) { return; }
+            if (element == null) { return; }
+            if (parent == null) { return; }
+
             if (!options.HasFlag(XmlConvertOptions.ExcludeTypes))
             {
                 var typeName = obj.GetType().FullName;

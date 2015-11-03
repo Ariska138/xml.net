@@ -44,7 +44,7 @@ namespace Xml.Net
             var value = Activator.CreateInstance(type);
             var identifier = GetClassIdentifier(value);
 
-            var properties = type.GetRuntimeProperties();
+            var properties = type.GetTypeInfo().DeclaredProperties;
 
             if (properties != null)
             {
