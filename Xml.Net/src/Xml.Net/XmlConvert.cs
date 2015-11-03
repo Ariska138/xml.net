@@ -23,7 +23,7 @@ namespace Xml.Net
 
         private static string GetMemberIdentifier(MemberInfo info)
         {
-            var nameAttribute = info.GetCustomAttribute(typeof(XmlConvertElementNameAttribute));
+            var nameAttribute = info.GetCustomAttribute(typeof(XmlConvertCustomElementAttribute));
             if (nameAttribute != null)
             {
                 return info.Name;

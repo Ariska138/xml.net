@@ -3,9 +3,9 @@
 namespace Xml.Net
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class XmlConvertDictionaryElementNamesAttribute : Attribute
+    public class XmlConvertKeyValueElementAttribute : Attribute
     {
-        public XmlConvertDictionaryElementNamesAttribute(string keyName, string valueName)
+        public XmlConvertKeyValueElementAttribute(string keyName, string valueName)
         {
             if (keyName == null) { throw new ArgumentNullException(nameof(valueName)); }
             if (keyName.Length == 0) { throw new ArgumentException("The dictionary key element name cannot be empty"); }

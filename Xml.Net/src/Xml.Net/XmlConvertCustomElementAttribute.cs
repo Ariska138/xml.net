@@ -3,9 +3,9 @@
 namespace Xml.Net
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
-    public class XmlConvertElementNameAttribute : Attribute
+    public class XmlConvertCustomElementAttribute : Attribute
     {
-        public XmlConvertElementNameAttribute(string name)
+        public XmlConvertCustomElementAttribute(string name)
         {
             if (name == null) { throw new ArgumentNullException(nameof(name)); }
             if (name.Length == 0) { throw new ArgumentException("The xml object name cannot be empty"); }

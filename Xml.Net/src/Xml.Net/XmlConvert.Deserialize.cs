@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -55,48 +57,60 @@ namespace Xml.Net
             return value;
         }
 
-        private static void DeserializeProperty<T>(PropertyInfo property, T obj, XElement element)
+        private static void DeserializeProperty<T>(PropertyInfo property, T obj, XElement parent)
         {
+            if (property == null) { return; }
+            if (obj == null) { return; }
+            if (parent == null) { return; }
+
             var name = property.Name;
             var type = property.PropertyType;
 
-            var propertyElement = GetChildElement(name, element);
-            if (propertyElement != null)
+            var propertyElement = GetChildElement(name, parent);
+
+            var value = DeserializeObjectInternal(type, propertyElement);
+            if (value != null)
             {
-                var value = DeserializeObjectInternal(type, propertyElement);
-                if (value != null)
-                {
-                    property.SetValue(obj, value);
-                }
-                else
-                {
-                    //Handle not parsable error
-                }
+                property.SetValue(obj, value);
+            }
+            else
+            {
+                //Handle not parsable error
             }
         }
 
-        private static object DeserializeObjectInternal(Type type, XElement element)
+        private static object DeserializeObjectInternal(Type type, XElement parent)
         {
-            var value = element.Value;
-            if (value == null) { /*No value*/ return null; }
+            if (type == null) { return null; }
+            if (parent == null) { return null; }
+
+            var value = parent.Value;
+            if (value == null) { return null; }
             
             if (IsFundamentalPrimitive(type))
             {
-                return DeserializeFundamentalPrimitive(type, element);
+                return DeserializeFundamentalPrimitive(type, parent);
             }
             else if (IsList(type))
             {
-                return DeserializeList(type, element);
+                return DeserializeList(type, parent);
+            }
+            else if (IsDictionary(type))
+            {
+                return DeserializeDictionary(type, parent);
             }
 
             return null;
         }
 
-        private static object DeserializeFundamentalPrimitive(Type type, XElement element)
+        private static object DeserializeFundamentalPrimitive(Type type, XElement parent)
         {
+            if (type == null) { return null; }
+            if (parent == null) { return null; }
+
             try
             {
-                return Convert.ChangeType(element.Value, type);
+                return Convert.ChangeType(parent.Value, type);
             }
             catch(InvalidCastException)
             {
@@ -104,43 +118,107 @@ namespace Xml.Net
             }
         }
 
-        private static object DeserializeList(Type type, XElement element)
+        private static object DeserializeList(Type type, XElement parent)
         {
+            if (type == null) { return null; }
+            if (parent == null) { return null; }
+
             var list = (IList)Activator.CreateInstance(type);
-            var childElements = element.Elements();
-            if (childElements == null) { return list; }
             
-            foreach (var childElement in childElements)
+            var elements = parent.Elements();
+            if (elements == null) { return list; }
+            
+            foreach (var element in elements)
             {
-                Type childType = null;
+                var elementType = GetElementType(element, type, 0); 
 
-                var typeString = childElement.Attribute("Type")?.Value;
-                if (typeString != null)
+                if (elementType != null)
                 {
-                    childType = Type.GetType(typeString);
-                }
-
-                if (childType == null)
-                {
-                    var genericArguments = type.GetTypeInfo().GenericTypeArguments;
-                    if (genericArguments != null && genericArguments.Length > 0)
-                    {
-                        childType = genericArguments[0];                        
-                    }
-                }
-
-                if (childType != null)
-                {
-                    var obj = DeserializeObjectInternal(childType, childElement);
+                    var obj = DeserializeObjectInternal(elementType, element);
 
                     if (obj != null)
                     {
                         list.Add(obj);
                     }
+                    else
+                    {
+                        //Error parsing key and/or value
+                    }
                 }
             }
 
             return list;
+        }
+
+        private static object DeserializeDictionary(Type type, XElement parent)
+        {
+            if (type == null) { return null; }
+            if (parent == null) { return null; }
+
+            var dictionary = (IDictionary)Activator.CreateInstance(type);
+
+            var elements = parent.Elements();
+            if (elements == null) { return dictionary; }
+
+            foreach (var element in elements)
+            {
+                var keyValueElements = element.Elements();
+                if (keyValueElements == null) { return dictionary; }
+
+                var keyValueElementsList = new List<XElement>(keyValueElements);
+
+                if (keyValueElementsList.Count < 2)
+                {
+                    //No fully formed key value pair
+                    return dictionary;
+                }
+
+                var keyElement = keyValueElementsList[0];
+                var valueElement = keyValueElementsList[1];
+                                
+                var keyType = GetElementType(keyElement, type, 0);
+                var valueType = GetElementType(valueElement, type, 1);
+
+                
+                if (keyType != null && valueType != null)
+                {
+                    var key = DeserializeObjectInternal(keyType, keyElement);
+                    var value = DeserializeObjectInternal(valueType, valueElement);
+                    
+                    if (key != null && value != null)
+                    {
+                        dictionary.Add(key, value);
+                    }
+                    else
+                    {
+                        //Error parsing key and/or value
+                    }
+                }
+            }
+
+            return dictionary;
+        }
+
+        private static Type GetElementType(XElement element, Type parentType, int genericArgumentIndex)
+        {
+            Type type = null;
+
+            var typeString = element?.Attribute("Type")?.Value;
+            if (typeString != null)
+            {
+                type = Type.GetType(typeString);
+            }
+            
+            if (type == null)
+            {
+                var genericArguments = parentType?.GetTypeInfo().GenericTypeArguments;
+                if (genericArguments != null && genericArgumentIndex >= 0 && genericArguments.Length > genericArgumentIndex)
+                {
+                    type = genericArguments[genericArgumentIndex];
+                }
+            }
+
+            return type;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Xml.Linq;
@@ -45,7 +46,7 @@ namespace Xml.Net
 
         private static void SerializeProperty(PropertyInfo property, object obj, XElement parent, XmlConvertOptions options)
         {            
-            if (property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null)
+            if (IsIgnoredProperty(property))
             {
                 return;
             }
@@ -53,10 +54,27 @@ namespace Xml.Net
             var name = GetMemberIdentifier(property);
             var value = property.GetValue(obj);
             
-            SerializeObjectInternal(name, value, parent, options);
+            string elementNames = null;
+            string keyNames = null;
+            string valueNames = null;
+            
+            if (IsList(property.PropertyType))
+            {
+                elementNames = GetCollectionElementName(property);
+            }
+            else if (IsDictionary(property.PropertyType))
+            {
+                elementNames = GetCollectionElementName(property);
+
+                var dictionaryNames = GetDictionaryElementName(property);
+                keyNames = dictionaryNames.Key;
+                valueNames = dictionaryNames.Value;
+            }
+
+            SerializeObjectInternal(name, value, parent, options, elementNames, keyNames, valueNames);
         }
 
-        private static void SerializeObjectInternal(string name, object obj, XElement parent, XmlConvertOptions options)
+        private static void SerializeObjectInternal(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames, string keyNames, string valueNames)
         {
             if (obj == null) { return; }
 
@@ -66,11 +84,17 @@ namespace Xml.Net
             }
             else if (IsList(obj))
             {
-                SerializeList(name, obj, parent, options);
+                if (elementNames == null) { elementNames = "Element"; }
+
+                SerializeList(name, obj, parent, options, elementNames);
             }
             else if (IsDictionary(obj))
             {
-                SerializeDictionary(name, obj, parent, options);
+                if (elementNames == null) { elementNames = "Element"; }
+                if (keyNames == null) { keyNames = "Key"; }
+                if (valueNames == null) { valueNames = "Value"; }
+
+                SerializeDictionary(name, obj, parent, options, elementNames, keyNames, valueNames);
             }
         }
 
@@ -82,25 +106,77 @@ namespace Xml.Net
             SetupSerializedElement(obj, element, parent, options);
         }
 
-        private static void SerializeList(string name, object obj, XElement parent, XmlConvertOptions options)
+        private static void SerializeList(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames)
         {
             var element = new XElement(name);
 
             var list = (IList)obj;
-            for (int i = 0; i < list.Count; i++)
+            foreach (var value in list)
             {
-                var collectionName = "Element" + i.ToString();
-                var collectionValue = list[i];
+                SerializeObjectInternal(elementNames, value, element, options, null, null, null);
+            }
 
-                SerializeObjectInternal(collectionName, collectionValue, element, options);
+            SetupSerializedElement(obj, element, parent, options);
+        }
+                
+        private static void SerializeDictionary(string name, object obj, XElement parent, XmlConvertOptions options, string elementNames, string keyNames, string valueNames)
+        {
+            //TODO: Serialize Dictionaries
+            var element = new XElement(name);
+
+            var dictionary = (IDictionary)obj;
+            foreach (DictionaryEntry value in dictionary)
+            {
+                var childElement = new XElement(elementNames);
+
+                SerializeObjectInternal(keyNames, value.Key, childElement, options, null, null, null);
+                SerializeObjectInternal(valueNames, value.Value, childElement, options, null, null, null);
+
+                element.Add(childElement);
             }
 
             SetupSerializedElement(obj, element, parent, options);
         }
 
-        private static void SerializeDictionary(string name, object obj, XElement parent, XmlConvertOptions options)
+
+        private static bool IsIgnoredProperty(PropertyInfo property)
         {
-            //TODO: Serialize Dictionaries
+            return property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null;
+        }
+
+        private static string GetCollectionElementName(PropertyInfo property)
+        {
+            var name = "Element";
+
+            var elementNameAttribute = property?.GetCustomAttribute<XmlConvertElementsNameAttribute>();
+            if (elementNameAttribute?.Name != null)
+            {
+                return elementNameAttribute.Name;
+            }
+
+            return name;
+        }
+
+        private static KeyValuePair<string, string> GetDictionaryElementName(PropertyInfo property)
+        {
+            var keyName = "Key";
+            var valueName = "Value";
+
+            var elementNameAttribute = property?.GetCustomAttribute<XmlConvertKeyValueElementAttribute>();
+            if (elementNameAttribute != null)
+            {
+                if (elementNameAttribute.KeyName != null)
+                {
+                    keyName = elementNameAttribute.KeyName;
+                }
+
+                if (elementNameAttribute.ValueName != null)
+                {
+                    valueName = elementNameAttribute.ValueName;
+                }
+            }
+
+            return new KeyValuePair<string, string>(keyName, valueName);
         }
 
         private static void SetupSerializedElement(object obj, XElement element, XElement parent, XmlConvertOptions options)

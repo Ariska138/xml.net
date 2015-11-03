@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xml.Net;
 
@@ -27,9 +28,14 @@ namespace Tests
 
         public DateTime TestDateTime { get; set; }
 
+        [XmlConvertElementsName("Hi")]
         public Collection<string> TestCollection { get; set; }
 
-        [XmlConvertElementName("AString")]
+        [XmlConvertElementsName("DictionaryItem")]
+        [XmlConvertKeyValueElement("AKey", "AValue")]
+        public Dictionary<string, string> TestDictionary { get; set; }
+
+        [XmlConvertCustomElement("AString")]
         public string CustomNameString { get; set; }
 
         [XmlConvertIgnored]
@@ -38,7 +44,6 @@ namespace Tests
 
     class Program
     {
-
         static Test CreateTestObject()
         {
             var test = new Test();
@@ -66,9 +71,16 @@ namespace Tests
 
             test.TestCollection = new Collection<string>
             {
-                "hi",
-                "yo",
-                "test"
+                "1",
+                "2",
+                "3"
+            };
+
+            test.TestDictionary = new Dictionary<string, string>
+            {
+                { "1", "Value1" },
+                { "2", "Value2" },
+                { "3", "Value3" }
             };
 
             test.CustomNameString = "Custom Name!";
@@ -126,7 +138,15 @@ namespace Tests
             {
                 Console.WriteLine(obj);
             }
-            
+
+            Console.WriteLine("************");
+
+            Console.WriteLine("Dictionary:");
+            foreach (var obj in testOutput.TestDictionary)
+            {
+                Console.WriteLine(obj.Key + " : " + obj.Value);
+            }
+
             Console.ReadLine();
         }
     }
