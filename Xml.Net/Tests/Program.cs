@@ -29,7 +29,7 @@ namespace Tests
 
         public Collection<string> TestCollection { get; set; }
 
-        [XmlConvertCustomName("AString")]
+        [XmlConvertElementName("AString")]
         public string CustomNameString { get; set; }
 
         [XmlConvertIgnored]

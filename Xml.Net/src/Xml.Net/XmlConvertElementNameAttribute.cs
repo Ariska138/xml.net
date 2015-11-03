@@ -2,7 +2,7 @@
 
 namespace Xml.Net
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
     public class XmlConvertElementNameAttribute : Attribute
     {
         public XmlConvertElementNameAttribute(string name)
