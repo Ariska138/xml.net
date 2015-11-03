@@ -1,5 +1,5 @@
 # Xml.Net
-A high performance xml serialization library for .NET applications
+A high performance XML serialization library for .NET applications
 
 #Example Use
 ##Serialization
