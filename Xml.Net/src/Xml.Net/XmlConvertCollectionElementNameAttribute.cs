@@ -8,7 +8,7 @@ namespace Xml.Net
         public XmlConvertCollectionElementNameAttribute(string name)
         {
             if (name == null) { throw new ArgumentNullException(nameof(name)); }
-            if (name.Length == 0) { throw new ArgumentException("The xml custom collection name cannot be empty"); }
+            if (name.Length == 0) { throw new ArgumentException("The collection element name cannot be empty"); }
 
             Name = name;
         }
