@@ -140,6 +140,14 @@ namespace Xml.Net
 
                 SerializeDictionary(value, name, parentElement, elementNames, keyNames, valueNames, options);
             }
+            else
+            {
+                var objectElement = SerializeXElement(value, options);
+                if (objectElement != null)
+                {
+                    parentElement.Add(objectElement);
+                }
+            }
         }
 
         /// <summary>
