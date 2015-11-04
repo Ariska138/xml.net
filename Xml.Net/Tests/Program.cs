@@ -71,9 +71,9 @@ namespace Tests
 
             test.TestCollection = new Collection<string>
             {
-                "1",
-                "2",
-                "3"
+                "Obj1",
+                "Obj2",
+                "Obj3"
             };
 
             test.TestDictionary = new Dictionary<string, string>
@@ -90,10 +90,19 @@ namespace Tests
         
         static void Main(string[] args)
         {
+            TestSerialization();
+
+            TestCollectionDeserialization();
+
+            Console.ReadLine();
+        }
+
+        public static void TestSerialization()
+        {
             var testInput = CreateTestObject();
 
             var xml = XmlConvert.SerializeObject(testInput, XmlConvertOptions.ExcludeTypes);
-            
+
             var testOutput = XmlConvert.DeserializeObject<Test>(xml);
 
             Console.WriteLine(xml);
@@ -146,8 +155,39 @@ namespace Tests
             {
                 Console.WriteLine(obj.Key + " : " + obj.Value);
             }
+        }
 
-            Console.ReadLine();
+        public class CollectionTestObject 
+        {
+            public string Obj1 { get; set; }
+            public string Obj2 { get; set; }
+        }
+
+        public class CollectionTests
+        {
+            public Collection<CollectionTestObject> TestObjects { get; set; }
+        }
+
+        public static void TestCollectionDeserialization()
+        {
+            var deserializationXml =
+@"<CollectionTests>
+  <TestObjects>
+    <Element>
+      <Obj1>Hi</Obj1>
+      <Obj2>Yo</Obj2>
+    </Element>
+  </TestObjects>
+</CollectionTests>";
+            var deserializationTest = XmlConvert.DeserializeObject<CollectionTests>(deserializationXml);
+
+            Console.WriteLine("************");
+            
+            Console.WriteLine("Deserialized Collection:");
+            foreach (var obj in deserializationTest.TestObjects)
+            {
+                Console.WriteLine(obj.Obj1.ToString() + ", " + obj.Obj2.ToString());
+            }
         }
     }
 }

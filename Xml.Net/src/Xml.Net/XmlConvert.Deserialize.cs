@@ -174,6 +174,10 @@ namespace Xml.Net
             {
                 return DeserializeDictionary(type, parentElement, options);
             }
+            else
+            {
+                return DeserializeXElement(type, parentElement);
+            }
 
             return null;
         }
