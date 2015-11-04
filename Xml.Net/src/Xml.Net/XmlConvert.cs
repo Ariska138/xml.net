@@ -6,10 +6,13 @@ using System.Xml.Linq;
 
 namespace Xml.Net
 {
+    /// <summary>
+    /// The class that serializes or deserializes .NET objects.
+    /// </summary>
     public static partial class XmlConvert
     {
         /// <summary>
-        /// Provides the default options for formatting, serializing and deserializing objects
+        /// Provides the default options for formatting, serializing and deserializing objects.
         /// </summary>
         private const XmlConvertOptions DefaultConvertOptions = XmlConvertOptions.None;
 
@@ -47,7 +50,7 @@ namespace Xml.Net
         }
 
         /// <summary>
-        /// Gets the name-specified child XElement of the parent XElement
+        /// Gets the name-specified child XElement of the parent XElement.
         /// </summary>
         /// <param name="name">The name of the child XElement to get.</param>
         /// <param name="parent">The parent of the child XElement to get.</param>

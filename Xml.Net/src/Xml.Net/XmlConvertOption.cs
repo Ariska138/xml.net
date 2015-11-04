@@ -8,7 +8,13 @@ namespace Xml.Net
     [Flags]
     public enum XmlConvertOptions
     {
+        /// <summary>
+        /// The default option.
+        /// </summary>
         None = 0,
+        /// <summary>
+        /// Exclude the type of the property from serialized XML.
+        /// </summary>
         ExcludeTypes = 1 << 0
     }
 }

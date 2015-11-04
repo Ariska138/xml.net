@@ -2,9 +2,16 @@
 
 namespace Xml.Net
 {
+    /// <summary>
+    /// The attribute that provides a custom name elements in a list or dictionary when serialized into XML.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
     public class XmlConvertCustomElementAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XmlConvertCustomElementAttribute"/> class with a name.
+        /// </summary>
+        /// <param name="name">The custom name of the object when serialized into XML.</param>
         public XmlConvertCustomElementAttribute(string name)
         {
             if (name == null) { throw new ArgumentNullException(nameof(name)); }
@@ -13,6 +20,9 @@ namespace Xml.Net
             Name = name;
         }
 
+        /// <summary>
+        /// The custom name of the object when serialized into XML.
+        /// </summary>
         public string Name { get; }
     }
 }
