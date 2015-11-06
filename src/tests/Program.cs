@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Xml.Net;
 
-namespace Tests
+namespace Xml.Net.Tests
 {
     public class Test
     {

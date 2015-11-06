@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "title": "Xml.Net",
   "summary": "A high performance XML serialization library for .NET applications",
   "description": "A high performance XML serialization library for .NET applications",
@@ -45,19 +45,19 @@
     },
     "aspnet50": {
       "frameworkAssemblies": {
-        "System.Collections": "4.0.0.0",
+        "System.Xml": "4.0.0.0",
         "System.Xml.Linq": "4.0.0.0"
       }
     },
     "dnx451": {
       "frameworkAssemblies": {
-        "System.Collections": "4.0.0.0",
+        "System.Xml": "4.0.0.0",
         "System.Xml.Linq": "4.0.0.0"
       }
     },
     "net45": {
       "frameworkAssemblies": {
-        "System.Collections": "4.0.0.0",
+        "System.Xml": "4.0.0.0",
         "System.Xml.Linq": "4.0.0.0"
       }
     }
