@@ -178,8 +178,6 @@ namespace Xml.Net
             {
                 return DeserializeXElement(type, parentElement);
             }
-
-            return null;
         }
 
         /// <summary>
