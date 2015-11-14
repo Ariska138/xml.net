@@ -322,6 +322,23 @@
         "runtime": {
           "lib/dotnet/System.Xml.XDocument.dll": {}
         }
+      },
+      "Xml.Net/1.0.4": {
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23409",
+          "System.Linq": "4.0.1-beta-23409",
+          "System.Threading": "4.0.11-beta-23409",
+          "System.Runtime": "4.0.21-beta-23409",
+          "System.Xml.XDocument": "4.0.11-beta-23409",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.Extensions": "4.0.0"
+        },
+        "compile": {
+          "lib/dnxcore50/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Xml.Net.dll": {}
+        }
       }
     },
     ".NETPlatform,Version=v5.0": {
@@ -569,6 +586,23 @@
         },
         "runtime": {
           "lib/dotnet/System.Xml.XDocument.dll": {}
+        }
+      },
+      "Xml.Net/1.0.4": {
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23409",
+          "System.Linq": "4.0.1-beta-23409",
+          "System.Threading": "4.0.11-beta-23409",
+          "System.Runtime": "4.0.21-beta-23409",
+          "System.Xml.XDocument": "4.0.11-beta-23409",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.Extensions": "4.0.0"
+        },
+        "compile": {
+          "lib/dotnet/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Xml.Net.dll": {}
         }
       }
     },
@@ -818,11 +852,79 @@
         "runtime": {
           "lib/dotnet/System.Xml.XDocument.dll": {}
         }
+      },
+      "Xml.Net/1.0.4": {
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23409",
+          "System.Linq": "4.0.1-beta-23409",
+          "System.Threading": "4.0.11-beta-23409",
+          "System.Runtime": "4.0.21-beta-23409",
+          "System.Xml.XDocument": "4.0.11-beta-23409",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.Extensions": "4.0.0"
+        },
+        "compile": {
+          "lib/aspnetcore50/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/aspnetcore50/Xml.Net.dll": {}
+        }
       }
     },
-    "Asp.Net,Version=v5.0": {},
-    "DNX,Version=v4.5.1": {},
-    ".NETFramework,Version=v4.5": {}
+    "Asp.Net,Version=v5.0": {
+      "Xml.Net/1.0.4": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "Microsoft.CSharp"
+        ],
+        "compile": {
+          "lib/aspnet50/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/aspnet50/Xml.Net.dll": {}
+        }
+      }
+    },
+    "DNX,Version=v4.5.1": {
+      "Xml.Net/1.0.4": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "Microsoft.CSharp"
+        ],
+        "compile": {
+          "lib/dnx451/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Xml.Net.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5": {
+      "Xml.Net/1.0.4": {
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "Microsoft.CSharp"
+        ],
+        "compile": {
+          "lib/net45/Xml.Net.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Xml.Net.dll": {}
+        }
+      }
+    }
   },
   "libraries": {
     "System.Collections/4.0.11-beta-23409": {
@@ -1623,35 +1725,55 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._"
       ]
+    },
+    "Xml.Net/1.0.4": {
+      "sha512": "sor/n3gBkYAEuiRZkPn4DlSqlVatCs2OxpBNyqjB0AXu0Tzf1O5ptynKieiuy8OE6KDXp1PbNxJad2ufxT4j+g==",
+      "files": [
+        "Xml.Net.1.0.4.nupkg",
+        "Xml.Net.1.0.4.nupkg.sha512",
+        "Xml.Net.nuspec",
+        "lib/aspnet50/Xml.Net.dll",
+        "lib/aspnet50/Xml.Net.xml",
+        "lib/aspnetcore50/Xml.Net.dll",
+        "lib/aspnetcore50/Xml.Net.xml",
+        "lib/dnx451/Xml.Net.dll",
+        "lib/dnx451/Xml.Net.xml",
+        "lib/dnxcore50/Xml.Net.dll",
+        "lib/dnxcore50/Xml.Net.xml",
+        "lib/dotnet/Xml.Net.dll",
+        "lib/dotnet/Xml.Net.xml",
+        "lib/net45/Xml.Net.dll",
+        "lib/net45/Xml.Net.xml"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "": [],
     "DNXCore,Version=v5.0": [
-      "System.Collections >= 4.0.11-beta-23409",
-      "System.Linq >= 4.0.1-beta-23409",
-      "System.Threading >= 4.0.11-beta-23409",
-      "System.Runtime >= 4.0.21-beta-23409",
-      "System.Xml.XDocument >= 4.0.11-beta-23409",
-      "System.Reflection >= 4.1.0-beta-23409",
+      "System.Collections >= 4.0.11-beta-*",
+      "System.Linq >= 4.0.1-beta-*",
+      "System.Threading >= 4.0.11-beta-*",
+      "System.Runtime >= 4.0.21-beta-*",
+      "System.Xml.XDocument >= 4.0.11-beta-*",
+      "System.Reflection >= 4.1.0-beta-*",
       "System.Reflection.Extensions >= 4.0.0"
     ],
     ".NETPlatform,Version=v5.0": [
-      "System.Collections >= 4.0.11-beta-23409",
-      "System.Linq >= 4.0.1-beta-23409",
-      "System.Threading >= 4.0.11-beta-23409",
-      "System.Runtime >= 4.0.21-beta-23409",
-      "System.Xml.XDocument >= 4.0.11-beta-23409",
-      "System.Reflection >= 4.1.0-beta-23409",
+      "System.Collections >= 4.0.11-beta-*",
+      "System.Linq >= 4.0.1-beta-*",
+      "System.Threading >= 4.0.11-beta-*",
+      "System.Runtime >= 4.0.21-beta-*",
+      "System.Xml.XDocument >= 4.0.11-beta-*",
+      "System.Reflection >= 4.1.0-beta-*",
       "System.Reflection.Extensions >= 4.0.0"
     ],
     "Asp.NetCore,Version=v5.0": [
-      "System.Collections >= 4.0.11-beta-23409",
-      "System.Linq >= 4.0.1-beta-23409",
-      "System.Threading >= 4.0.11-beta-23409",
-      "System.Runtime >= 4.0.21-beta-23409",
-      "System.Xml.XDocument >= 4.0.11-beta-23409",
-      "System.Reflection >= 4.1.0-beta-23409",
+      "System.Collections >= 4.0.11-beta-*",
+      "System.Linq >= 4.0.1-beta-*",
+      "System.Threading >= 4.0.11-beta-*",
+      "System.Runtime >= 4.0.21-beta-*",
+      "System.Xml.XDocument >= 4.0.11-beta-*",
+      "System.Reflection >= 4.1.0-beta-*",
       "System.Reflection.Extensions >= 4.0.0"
     ],
     "Asp.Net,Version=v5.0": [

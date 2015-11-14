@@ -15,6 +15,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A6890C69-C040-46FA-8361-BF0857E7358A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml.Net.Tests", "tests\Xml.Net.Tests.csproj", "{C5D1F73A-3510-4C61-ADBE-FF0179591179}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5AFC9510-77F8-4DEE-AA00-72BA83B6DF00} = {5AFC9510-77F8-4DEE-AA00-72BA83B6DF00}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

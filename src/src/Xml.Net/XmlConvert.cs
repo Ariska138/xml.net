@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -80,7 +79,6 @@ namespace Xml.Net
         /// <returns>The boolean value indicating whether the type is a fundamental primitive.</returns>
         private static bool IsFundamentalPrimitive(Type type) => (
             type.Equals(typeof(string))
-            || type.Equals(typeof(string))
             || type.Equals(typeof(char))
             || type.Equals(typeof(sbyte))
             || type.Equals(typeof(short))
@@ -114,8 +112,7 @@ namespace Xml.Net
         /// <returns>The boolean value indicating whether the type is a list.</returns>
         private static bool IsList(Type type)
         {
-            return typeof(IList).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
-                || typeof(IReadOnlyList<>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(ICollection).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
 
         /// <summary>
@@ -145,7 +142,7 @@ namespace Xml.Net
         /// <returns>The boolean value indicating whether the type can be serialized or deserialized into XML.</returns>
         private static bool IsSupported(object obj)
         {
-            return IsFundamentalPrimitive(obj) || IsList(obj);
+            return IsFundamentalPrimitive(obj) || IsList(obj) || IsDictionary(obj);
         }
     }
 }

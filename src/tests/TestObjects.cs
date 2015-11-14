@@ -1,0 +1,216 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Xml.Net.Tests
+{
+    public class BasicObject
+    {
+        public BasicObject() { }
+
+        public BasicObject(string s)
+        {
+            StringValue = s;
+        }
+
+        public string StringValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            BasicObject bo = (BasicObject)obj;
+            if (bo == null || (StringValue == null && bo.StringValue == null))
+            {
+                return true;
+            }
+
+            return StringValue != null && StringValue.Equals(bo.StringValue);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+        
+    public class EmbeddedObject
+    {
+        public EmbeddedObject() { }
+
+        public EmbeddedObject(BasicObject bo)
+        {
+            BasicObjectValue = bo;
+        }
+
+        public BasicObject BasicObjectValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            EmbeddedObject eo = (EmbeddedObject)obj;
+            if (eo == null || (BasicObjectValue == null && eo.BasicObjectValue == null))
+            {
+                return true;
+            }
+
+            return BasicObjectValue != null && BasicObjectValue.Equals(eo.BasicObjectValue);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    public class AdvancedObject
+    {
+        public AdvancedObject() { }
+
+        public AdvancedObject(PrimitiveObject po, CollectionObject co, EmbeddedObject eo)
+        {
+            PrimitiveObjectValue = po;
+            CollectionObjectValue = co;
+            EmbeddedObjectValue = eo;
+        }
+
+        public PrimitiveObject PrimitiveObjectValue { get; set; }
+        public CollectionObject CollectionObjectValue { get; set; }
+        public EmbeddedObject EmbeddedObjectValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            AdvancedObject ao = (AdvancedObject)obj;
+
+            if (ao == null || (PrimitiveObjectValue == null && ao.PrimitiveObjectValue == null &&
+                CollectionObjectValue == null && ao.CollectionObjectValue == null &&
+                EmbeddedObjectValue == null && ao.EmbeddedObjectValue == null))
+            {
+                return true;
+            }
+            
+            return 
+                PrimitiveObjectValue != null && PrimitiveObjectValue.Equals(ao.PrimitiveObjectValue) &&
+                CollectionObjectValue != null && CollectionObjectValue.Equals(ao.CollectionObjectValue) &&
+                EmbeddedObjectValue != null && EmbeddedObjectValue.Equals(ao.EmbeddedObjectValue);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    public class PrimitiveObject
+    {
+        public PrimitiveObject() { }
+
+        public PrimitiveObject(string s, char c, sbyte i8, short i16, int i32, long i64, byte u8, ushort u16, uint u32, ulong u64, float f, double d, decimal dec, bool b, DateTime dt)
+        {
+            StringValue = s;
+            CharValue = c;
+
+            SByteValue = i8;
+            ShortValue = i16;
+            IntValue = i32;
+            LongValue = i64;
+
+            UByteValue = u8;
+            UShortValue = u16;
+            UIntValue = u32;
+            ULongValue = u64;
+
+            FloatValue = f;
+            DoubleValue = d;
+            DecimalValue = dec;
+
+            BoolValue = b;
+
+            DateTimeValue = dt;
+        }
+
+        public string StringValue { get; set; }
+        public char CharValue { get; set; }
+
+        public sbyte SByteValue { get; set; }
+        public short ShortValue { get; set; }
+        public int IntValue { get; set; }
+        public long LongValue { get; set; }
+
+        public byte UByteValue { get; set; }
+        public ushort UShortValue { get; set; }
+        public uint UIntValue { get; set; }
+        public ulong ULongValue { get; set; }
+
+        public float FloatValue { get; set; }
+        public double DoubleValue { get; set; }
+        public decimal DecimalValue { get; set; }
+
+        public bool BoolValue { get; set; }
+
+        public DateTime DateTimeValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            PrimitiveObject po = (PrimitiveObject)obj;
+
+            if (po == null || (StringValue == null && po.StringValue == null))
+            {
+                return true;
+            }
+
+            return 
+                StringValue != null && StringValue == po.StringValue &&
+                CharValue == po.CharValue &&
+                SByteValue == po.SByteValue &&
+                ShortValue == po.ShortValue &&
+                IntValue == po.IntValue &&
+                LongValue == po.LongValue &&
+                UByteValue == po.UByteValue &&
+                UShortValue == po.UShortValue &&
+                UIntValue == po.UIntValue &&
+                ULongValue == po.ULongValue &&
+                FloatValue == po.FloatValue &&
+                DoubleValue == po.DoubleValue &&
+                DecimalValue == po.DecimalValue &&
+                BoolValue == po.BoolValue &&
+                DateTimeValue == DateTimeValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    public class CollectionObject
+    {
+        public CollectionObject() { }
+
+        public Collection<string> CollectionValue { get; set; }
+        public List<string> ListValue { get; set; }
+
+        public CollectionObject(Collection<string> c, List<string> l)
+        {
+            CollectionValue = c;
+            ListValue = l;
+        }
+
+        public override bool Equals(object obj)
+        {
+            CollectionObject co = (CollectionObject)obj;
+
+            if (co == null || (CollectionValue == null && co.CollectionValue == null &&
+                ListValue == null && co.ListValue == null))
+            {
+                return true;
+            }
+
+            return
+                CollectionValue != null && CollectionValue.Count.Equals(co.CollectionValue.Count) &&
+                ListValue != null && ListValue.Count.Equals(co.ListValue.Count);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+}

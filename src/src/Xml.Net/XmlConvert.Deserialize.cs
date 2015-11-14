@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -101,7 +102,7 @@ namespace Xml.Net
         {
             if (type == null) { throw new ArgumentNullException(nameof(type)); }
             if (element == null) { throw new ArgumentNullException(nameof(element)); }
-
+            
             var value = Activator.CreateInstance(type);
             var identifier = GetClassIdentifier(value);
 

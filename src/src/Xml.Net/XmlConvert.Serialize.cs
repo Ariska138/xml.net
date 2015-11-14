@@ -45,20 +45,20 @@ namespace Xml.Net
         /// <param name="value">The object to serialize.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
         /// <returns>The XDocument representation of the object.</returns>
-        public static XElement SerializeXElement(object obj, XmlConvertOptions options)
+        public static XElement SerializeXElement(object value, XmlConvertOptions options)
         {
-            if (obj == null) { throw new ArgumentNullException(nameof(obj)); }
-            if (IsFundamentalPrimitive(obj)) { throw new ArgumentException("Cannot serialize a fundamental primative", nameof(obj)); }
+            if (value == null) { throw new ArgumentNullException(nameof(value)); }
+            if (IsFundamentalPrimitive(value)) { throw new ArgumentException("Cannot serialize a fundamental primative", nameof(value)); }
             
-            var identifier = GetClassIdentifier(obj);            
+            var identifier = GetClassIdentifier(value);            
             var element = new XElement(identifier);
 
-            var properties = obj.GetType().GetRuntimeProperties();
+            var properties = value.GetType().GetRuntimeProperties();
             if (properties != null)
             {
                 foreach (var property in properties)
                 {
-                    SerializeProperty(property, obj, element, options);
+                    SerializeProperty(property, value, element, options);
                 }
             }
 
@@ -78,14 +78,21 @@ namespace Xml.Net
             if (parentObject == null) { return; }
             if (parentElement == null) { return; }
 
-            if (IsIgnoredProperty(property))
+            if (IsIgnoredProperty(property) || !property.CanRead) //Either we ignore or can't read the property
+            {
+                return;
+            }
+
+            var m = property.GetMethod;
+
+            var propertyValue = m.Invoke(parentObject, null);
+            if (propertyValue == null) //Ignore null properties
             {
                 return;
             }
 
             var propertyName = GetMemberIdentifier(property);
-            var propertyValue = property.GetValue(parentObject);
-            
+                        
             string elementNames = null;
             string keyNames = null;
             string valueNames = null;
@@ -186,7 +193,7 @@ namespace Xml.Net
 
             var element = new XElement(name);
 
-            var list = (IList)value;
+            var list = (ICollection)value;
             foreach (var childValue in list)
             {
                 SerializeObjectInternal(childValue, elementNames, element, null, null, null, options);
