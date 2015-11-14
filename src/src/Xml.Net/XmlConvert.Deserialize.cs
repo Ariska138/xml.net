@@ -132,11 +132,11 @@ namespace Xml.Net
             if (parentObject == null) { return; }
             if (parentElement == null) { return; }
 
-            var name = property.Name;
+            var name = GetMemberIdentifier(property);
             var type = property.PropertyType;
 
             var propertyElement = GetChildElement(name, parentElement);
-
+            
             var value = DeserializeObjectInternal(type, propertyElement, options);
             if (value != null)
             {
@@ -162,7 +162,8 @@ namespace Xml.Net
 
             var value = parentElement.Value;
             if (value == null) { return null; }
-            
+
+
             if (IsFundamentalPrimitive(type))
             {
                 return DeserializeFundamentalPrimitive(type, parentElement, options);
@@ -177,7 +178,7 @@ namespace Xml.Net
             }
             else
             {
-                return DeserializeXElement(type, parentElement);
+                return DeserializeXElement(type, parentElement, options);
             }
         }
 

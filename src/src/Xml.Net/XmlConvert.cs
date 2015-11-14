@@ -22,7 +22,7 @@ namespace Xml.Net
         /// <returns>The XML identifier of the class.</returns>
         private static string GetClassIdentifier(object obj)
         {
-            var xmlConvertible = obj as XmlConvertible;
+            var xmlConvertible = obj as IXmlConvertible;
             if (xmlConvertible != null)
             {
                 return xmlConvertible.XmlIdentifier;
@@ -39,10 +39,10 @@ namespace Xml.Net
         /// <returns>The XML identifier of the member.</returns>
         private static string GetMemberIdentifier(MemberInfo memberInfo)
         {
-            var nameAttribute = memberInfo.GetCustomAttribute(typeof(XmlConvertCustomElementAttribute));
+            var nameAttribute = (XmlConvertCustomElementAttribute)memberInfo.GetCustomAttribute(typeof(XmlConvertCustomElementAttribute));
             if (nameAttribute != null)
             {
-                return memberInfo.Name;
+                return nameAttribute.Name;
             }
 
             return memberInfo.Name;
@@ -133,16 +133,6 @@ namespace Xml.Net
         private static bool IsDictionary(Type type)
         {
             return typeof(IDictionary).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
-        }
-
-        /// <summary>
-        /// Checks if the object can be serialized or deserialized into XML.
-        /// </summary>
-        /// <param name="value">The object to check.</param>
-        /// <returns>The boolean value indicating whether the type can be serialized or deserialized into XML.</returns>
-        private static bool IsSupported(object obj)
-        {
-            return IsFundamentalPrimitive(obj) || IsList(obj) || IsDictionary(obj);
         }
     }
 }

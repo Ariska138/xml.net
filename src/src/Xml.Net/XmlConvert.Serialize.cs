@@ -9,7 +9,8 @@ namespace Xml.Net
     public static partial class XmlConvert
     {
         /// <summary>
-        /// Serializes the specified object to a XML string.
+        /// Serializes the specified object to a XML string. 
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
         /// <param name="value">The object to serialize.</param>
         /// <returns>The XML string representation of the object.</returns>
@@ -20,6 +21,7 @@ namespace Xml.Net
 
         /// <summary>
         /// Serializes the specified object to a XML string using options.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
         /// <param name="value">The object to serialize.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
@@ -31,9 +33,10 @@ namespace Xml.Net
 
         /// <summary>
         /// Serializes the specified object to a XElement.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
         /// <param name="value">The object to serialize.</param>
-        /// <returns>The XDocument representation of the object.</returns>
+        /// <returns>The XElement representation of the object.</returns>
         public static XElement SerializeXElement(object value)
         {
             return SerializeXElement(value, DefaultConvertOptions);
@@ -41,17 +44,30 @@ namespace Xml.Net
 
         /// <summary>
         /// Serializes the specified object to a XElement using options.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
         /// <param name="value">The object to serialize.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
-        /// <returns>The XDocument representation of the object.</returns>
+        /// <returns>The XElement representation of the object.</returns>
         public static XElement SerializeXElement(object value, XmlConvertOptions options)
         {
             if (value == null) { throw new ArgumentNullException(nameof(value)); }
             if (IsFundamentalPrimitive(value)) { throw new ArgumentException("Cannot serialize a fundamental primative", nameof(value)); }
             
-            var identifier = GetClassIdentifier(value);            
-            var element = new XElement(identifier);
+            var identifier = GetClassIdentifier(value);
+            return SerializeXElement(value, identifier, options);
+        }
+
+        /// <summary>
+        /// Serializes the specified object to a XElement using options.
+        /// </summary>
+        /// <param name="value">The object to serialize.</param>
+        /// <param name="name">The name of the object to serialize.</param>
+        /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the object.</returns>
+        private static XElement SerializeXElement(object value, string name, XmlConvertOptions options)
+        {
+            var element = new XElement(name);
 
             var properties = value.GetType().GetRuntimeProperties();
             if (properties != null)
@@ -78,7 +94,7 @@ namespace Xml.Net
             if (parentObject == null) { return; }
             if (parentElement == null) { return; }
 
-            if (IsIgnoredProperty(property) || !property.CanRead) //Either we ignore or can't read the property
+            if (IsIgnoredProperty(property) || !property.CanRead || !property.CanWrite) //Either we ignore or can't read the property
             {
                 return;
             }
@@ -92,7 +108,7 @@ namespace Xml.Net
             }
 
             var propertyName = GetMemberIdentifier(property);
-                        
+
             string elementNames = null;
             string keyNames = null;
             string valueNames = null;
@@ -149,7 +165,7 @@ namespace Xml.Net
             }
             else
             {
-                var objectElement = SerializeXElement(value, options);
+                var objectElement = SerializeXElement(value, name, options);
                 if (objectElement != null)
                 {
                     parentElement.Add(objectElement);

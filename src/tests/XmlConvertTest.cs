@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 using Xunit;
@@ -13,7 +14,7 @@ namespace Xml.Net.Tests
     {
         public static void Main(string[] args)
         {
-            SerializeDeserialize_AdvancedObject_Success();
+            //CustomNameTest.SerializeDeserialize_CustomName_Success();
             Console.ReadLine();
         }
 
@@ -89,17 +90,36 @@ namespace Xml.Net.Tests
             SerializeDeserializeObject_Equal_Success(ao);
         }
 
-        private static void SerializeDeserializeObject_Equal_Success<T>(T obj1) where T : new()
+        [Fact]
+        public static void SerializeObject_Invalid()
         {
-            string xml = default(string);
-            T obj2 = default(T);
+            Assert.Throws<ArgumentNullException>("value", () => XmlConvert.SerializeObject(null)); //Object is null
+            Assert.Throws<ArgumentException>("value", () => XmlConvert.SerializeObject("string")); //Object is a fundamental primitive
+        }
 
-            Console.WriteLine("Xml.Net");
+
+        public static void SerializeDeserializeObject_Equal_Success<T>(T obj1) where T : new()
+        {
+            T obj2 = default(T);
+            string xml = null;
+
+            //Test serialize deserialize string
+            Console.WriteLine("Xml.Net String");
             TimeAction(() => xml = XmlConvert.SerializeObject(obj1));
             TimeAction(() => obj2 = XmlConvert.DeserializeObject<T>(xml));
 
-            Assert.True(obj1.Equals(obj2));
+            Assert.Equal(obj1, obj2);
 
+            //Test serialize deserialize XElement
+            Console.WriteLine("Xml.Net XElement");
+            XElement element = null;
+
+            TimeAction(() => element = XmlConvert.SerializeXElement(obj1));
+            TimeAction(() => obj2 = XmlConvert.DeserializeXElement<T>(element));
+
+            Assert.Equal(obj1, obj2);
+
+            //Test XmlSerializer
             Console.WriteLine("XmlSerializer");
             TimeAction(() =>
             {
@@ -123,13 +143,6 @@ namespace Xml.Net.Tests
             });
 
             Assert.Equal(obj1, obj2);
-        }
-
-        [Fact]
-        public static void SerializeObject_Invalid()
-        {
-            Assert.Throws<ArgumentNullException>("value", () => XmlConvert.SerializeObject(null)); //Object is null
-            Assert.Throws<ArgumentException>("value", () => XmlConvert.SerializeObject("string")); //Object is a fundamental primitive
         }
 
         private static void TimeAction(Action action)

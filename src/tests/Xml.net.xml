@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xml.Net</name>
+    </assembly>
+    <members>
+        <member name="T:Xml.Net.IXmlConvertible">
+            <summary>
+            The interface that specifies a custom XML identifier for serialized elements - this overrides any attributes on properties of the class.
+            </summary>
+        </member>
+        <member name="T:Xml.Net.XmlConvert">
+            <summary>
+            The class that serializes or deserializes .NET objects.
+            </summary>
+        </member>
+        <member name="F:Xml.Net.XmlConvert.DefaultConvertOptions">
+            <summary>
+            Provides the default options for formatting, serializing and deserializing objects.
+            </summary>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.GetClassIdentifier(System.Object)">
+            <summary>
+            Gets the XML identifier of the class from an object of that class.
+            </summary>
+            <param name="obj">The object to use.</param>
+            <returns>The XML identifier of the class.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.GetMemberIdentifier(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the XML identifier of the member.
+            </summary>
+            <param name="memberInfo">The information about the member to use.</param>
+            <returns>The XML identifier of the member.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.GetChildElement(System.String,System.Xml.Linq.XElement)">
+            <summary>
+            Gets the name-specified child XElement of the parent XElement.
+            </summary>
+            <param name="name">The name of the child XElement to get.</param>
+            <param name="parent">The parent of the child XElement to get.</param>
+            <returns>The name-specified child XElement of the parent XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.IsFundamentalPrimitive(System.Object)">
+            <summary>
+            Checks if the object is a fundamental primitive object (e.g string, int etc.).
+            </summary>
+            <param name="value">The object to check.</param>
+            <returns>The boolean value indicating whether the object is a fundamental primitive.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.IsFundamentalPrimitive(System.Type)">
+            <summary>
+            Checks if the type is a fundamental primitive object (e.g string, int etc.).
+            </summary>
+            <param name="type">The type to check.</param>
+            <returns>The boolean value indicating whether the type is a fundamental primitive.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.IsList(System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.IsList(System.Type)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.IsDictionary(System.Object)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.IsDictionary(System.Type)" -->
+        <member name="M:Xml.Net.XmlConvert.DeserializeObject``1(System.String)">
+            <summary>
+            Deserializes the XML string to the specified .NET type.
+            </summary>
+            <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+            <param name="value">The XML string to deserialize.</param>
+            <returns>The deserialized object from the XML string.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeObject``1(System.String,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XML string to the specified .NET type using options.
+            </summary>
+            <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+            <param name="value">The XML string to deserialize.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized object from the XML string.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeObject(System.Type,System.String)">
+            <summary>
+            Deserializes the XML string to the specified .NET type.
+            </summary>
+            <param name="type">The type of the deserialized .NET object.</param>
+            <param name="value">The XML string to deserialize.</param>
+            <returns>The deserialized object from the XML string.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeObject(System.Type,System.String,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XML string to the specified .NET type using options.
+            </summary>
+            <param name="type">The type of the deserialized .NET object.</param>
+            <param name="value">The XML string to deserialize.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized object from the XML string.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeXElement``1(System.Xml.Linq.XElement)">
+            <summary>
+            Deserializes the XElement to the specified .NET type.
+            </summary>
+            <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+            <param name="element">The XElement to deserialize.</param>
+            <returns>The deserialized object from the XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeXElement``1(System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XElement to the specified .NET type using options.
+            </summary>
+            <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+            <param name="element">The XElement to deserialize.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized object from the XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeXElement(System.Type,System.Xml.Linq.XElement)">
+            <summary>
+            Deserializes the XElement to the specified .NET type.
+            </summary>
+            <param name="type">The type of the deserialized .NET object.</param>
+            <param name="element">The XElement to deserialize.</param>
+            <returns>The deserialized object from the XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeXElement(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XElement to the specified .NET type using options.
+            </summary>
+            <param name="type">The type of the deserialized .NET object.</param>
+            <param name="element">The XElement to deserialize.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized object from the XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeProperty(System.Reflection.PropertyInfo,System.Object,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XElement to the specified property using options.
+            </summary>
+            <param name="property">The property to deserialize the XElement into.</param>
+            <param name="parentObject">The object that owns the property.</param>
+            <param name="parentElement">The parent XElement used to deserialize the property.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeObjectInternal(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XElement to the object of a specified type using options.
+            </summary>
+            <param name="type">The type of the object to deserialize.</param>
+            <param name="parentElement">The parent XElement used to deserialize the object.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized object from the XElement.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.DeserializeFundamentalPrimitive(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Deserializes the XElement to the fundamental primitive (e.g. string, int etc.) of a specified type using options.
+            </summary>
+            <param name="type">The type of the fundamental primitive to deserialize.</param>
+            <param name="parentElement">The parent XElement used to deserialize the fundamental primitive.</param>
+            <param name="options">Indicates how the output is deserialized.</param>
+            <returns>The deserialized fundamental primitive from the XElement.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.DeserializeList(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.DeserializeDictionary(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)" -->
+        <member name="M:Xml.Net.XmlConvert.GetElementType(System.Xml.Linq.XElement,System.Type,System.Int32)">
+            <summary>
+            Gets the type of an object from its serialized XElement (e.g. if it has a type attribute) and its parent container type (e.g. if it is generic).
+            </summary>
+            <param name="element">The XElement representing the object used to get the type.</param>
+            <param name="parentType">The type of the object's parent container used to check if the object is in a generic container.</param>
+            <param name="genericArgumentIndex">The index of the object's type in the list of its parent container's generic arguments.</param>
+            <returns>The type of an object from its serialized XElement and its parent container type.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeObject(System.Object)">
+            <summary>
+            Serializes the specified object to a XML string. 
+            Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <returns>The XML string representation of the object.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeObject(System.Object,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes the specified object to a XML string using options.
+            Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XML string representation of the object.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeXElement(System.Object)">
+            <summary>
+            Serializes the specified object to a XElement.
+            Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <returns>The XElement representation of the object.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeXElement(System.Object,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes the specified object to a XElement using options.
+            Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement representation of the object.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeXElement(System.Object,System.String,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes the specified object to a XElement using options.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <param name="name">The name of the object to serialize.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement representation of the object.</returns>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeProperty(System.Reflection.PropertyInfo,System.Object,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes the specified property into a XElement using options.
+            </summary>
+            <param name="property">The property to serialize.</param>
+            <param name="parentObject">The object that owns the property.</param>
+            <param name="parentElement">The element in which to serialize the property.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeObjectInternal(System.Object,System.String,System.Xml.Linq.XElement,System.String,System.String,System.String,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes the specified property into a XElement using options.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <param name="name">The name of the object to serialize.</param>
+            <param name="parentElement">The element in which to serialize the object.</param>
+            <param name="elementNames">The optional custom name of collection elements.</param>
+            <param name="keyNames">The optional custom name of dictionary key elements.</param>
+            <param name="valueNames">The optional custom name of dictionary value elements.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SerializeFundamentalPrimitive(System.Object,System.String,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Serializes a fundamental primitive object (e.g. string, int etc.) into a XElement using options.
+            </summary>
+            <param name="value">The primitive to serialize.</param>
+            <param name="name">The name of the primitive to serialize.</param>
+            <param name="parentElement">The element in which to serialize the primitive.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.SerializeList(System.Object,System.String,System.Xml.Linq.XElement,System.String,Xml.Net.XmlConvertOptions)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.XmlConvert.SerializeDictionary(System.Object,System.String,System.Xml.Linq.XElement,System.String,System.String,System.String,Xml.Net.XmlConvertOptions)" -->
+        <member name="M:Xml.Net.XmlConvert.IsIgnoredProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Checks if a property should not be serialized.
+            </summary>
+            <param name="property">The property to check.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.GetCollectionElementName(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets the custom name of collection elements of a property.
+            </summary>
+            <param name="property">The property to use.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.GetDictionaryElementName(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets the custom name of collection key and value elements of a property.
+            </summary>
+            <param name="property">The property to use.</param>
+        </member>
+        <member name="M:Xml.Net.XmlConvert.SetupSerializedElement(System.Object,System.Xml.Linq.XElement,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Formats and adds a serialized object XElement to a parent element with options.
+            </summary>
+            <param name="value">The object serialized.</param>
+            <param name="element">The serialized XElement of the object.</param>
+            <param name="parentElement">The parent element of the serialized XElement.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+        </member>
+        <member name="T:Xml.Net.XmlConvertCustomElementAttribute">
+            <summary>
+            The attribute that provides a custom name elements in a list or dictionary when serialized into XML.
+            </summary>
+        </member>
+        <member name="M:Xml.Net.XmlConvertCustomElementAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xml.Net.XmlConvertCustomElementAttribute"/> class with a name.
+            </summary>
+            <param name="name">The custom name of the object when serialized into XML.</param>
+        </member>
+        <member name="P:Xml.Net.XmlConvertCustomElementAttribute.Name">
+            <summary>
+            The custom name of the object when serialized into XML.
+            </summary>
+        </member>
+        <member name="T:Xml.Net.XmlConvertElementsNameAttribute">
+            <summary>
+            The attribute that provides a custom name of elements in a list or dictionary when serialized into XML.
+            </summary>
+        </member>
+        <member name="M:Xml.Net.XmlConvertElementsNameAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xml.Net.XmlConvertElementsNameAttribute"/> class with a name.
+            </summary>
+            <param name="name">The custom name of the elements in a list or dictionary when serialized into XML.</param>
+        </member>
+        <member name="P:Xml.Net.XmlConvertElementsNameAttribute.Name">
+            <summary>
+            The custom name of elements in a list or dictionary when serialized into XML.
+            </summary>
+        </member>
+        <member name="T:Xml.Net.XmlConvertIgnoredAttribute">
+            <summary>
+            The attribute that specifies that the property it is applied to should not be serialized into XML.
+            </summary>
+        </member>
+        <member name="T:Xml.Net.XmlConvertKeyValueElementAttribute">
+            <summary>
+            The attribute that provides a custom key name and value name for elements in a dictionary when serialized into XML.
+            </summary>
+        </member>
+        <member name="M:Xml.Net.XmlConvertKeyValueElementAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xml.Net.XmlConvertKeyValueElementAttribute"/> class with a key name and a value name.
+            </summary>
+            <param name="name">The custom name of the key of a dictionary element when serialized into XML.</param>
+            <param name="name">The custom name of the value of a dictionary element when serialized into XML.</param>
+        </member>
+        <member name="P:Xml.Net.XmlConvertKeyValueElementAttribute.KeyName">
+            <summary>
+            The custom name of the key of a dictionary element when serialized into XML.
+            </summary>
+        </member>
+        <member name="P:Xml.Net.XmlConvertKeyValueElementAttribute.ValueName">
+            <summary>
+            The custom name of the value of a dictionary element when serialized into XML.
+            </summary>
+        </member>
+        <member name="T:Xml.Net.XmlConvertOptions">
+            <summary>
+            Indicates how the objects are formatted, serialized or deserialized.
+            </summary>
+        </member>
+        <member name="F:Xml.Net.XmlConvertOptions.None">
+            <summary>
+            The default option.
+            </summary>
+        </member>
+        <member name="F:Xml.Net.XmlConvertOptions.ExcludeTypes">
+            <summary>
+            Exclude the type of the property from serialized XML.
+            </summary>
+        </member>
+    </members>
+</doc>

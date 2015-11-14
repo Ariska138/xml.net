@@ -14,6 +14,15 @@
           "lib/DNXCore50/System.Collections.dll": {}
         }
       },
+      "System.Console/4.0.0-beta-23409": {
+        "dependencies": {
+          "System.Runtime": "4.0.0",
+          "System.IO": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Console.dll": {}
+        }
+      },
       "System.Diagnostics.Debug/4.0.10": {
         "dependencies": {
           "System.Runtime": "4.0.0"
@@ -350,6 +359,15 @@
           "ref/dotnet/System.Collections.dll": {}
         }
       },
+      "System.Console/4.0.0-beta-23409": {
+        "dependencies": {
+          "System.Runtime": "4.0.0",
+          "System.IO": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Console.dll": {}
+        }
+      },
       "System.Diagnostics.Debug/4.0.10": {
         "dependencies": {
           "System.Runtime": "4.0.0"
@@ -613,6 +631,15 @@
         },
         "compile": {
           "ref/dotnet/System.Collections.dll": {}
+        }
+      },
+      "System.Console/4.0.0-beta-23409": {
+        "dependencies": {
+          "System.Runtime": "4.0.0",
+          "System.IO": "4.0.0"
+        },
+        "compile": {
+          "ref/dotnet/System.Console.dll": {}
         }
       },
       "System.Diagnostics.Debug/4.0.10": {
@@ -978,6 +1005,27 @@
         "runtimes/win8-aot/lib/netcore50/ru/System.Collections.xml",
         "runtimes/win8-aot/lib/netcore50/zh-hans/System.Collections.xml",
         "runtimes/win8-aot/lib/netcore50/zh-hant/System.Collections.xml"
+      ]
+    },
+    "System.Console/4.0.0-beta-23409": {
+      "serviceable": true,
+      "sha512": "vVstiHq9NKm6jfqm2OQGYgEinU4Zrwbcjtfxq61v0xHXVhx8p3igw9XQCdCOILf1ZWsZtKcvdbcazNP7tL+u+g==",
+      "files": [
+        "runtime.json",
+        "System.Console.4.0.0-beta-23409.nupkg",
+        "System.Console.4.0.0-beta-23409.nupkg.sha512",
+        "System.Console.nuspec",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Console.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/System.Console.dll",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Console.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._"
       ]
     },
     "System.Diagnostics.Debug/4.0.10": {
@@ -1750,6 +1798,7 @@
   "projectFileDependencyGroups": {
     "": [],
     "DNXCore,Version=v5.0": [
+      "System.Console >= 4.0.0-beta-*",
       "System.Collections >= 4.0.11-beta-*",
       "System.Linq >= 4.0.1-beta-*",
       "System.Threading >= 4.0.11-beta-*",
@@ -1759,6 +1808,7 @@
       "System.Reflection.Extensions >= 4.0.0"
     ],
     ".NETPlatform,Version=v5.0": [
+      "System.Console >= 4.0.0-beta-*",
       "System.Collections >= 4.0.11-beta-*",
       "System.Linq >= 4.0.1-beta-*",
       "System.Threading >= 4.0.11-beta-*",
@@ -1768,6 +1818,7 @@
       "System.Reflection.Extensions >= 4.0.0"
     ],
     "Asp.NetCore,Version=v5.0": [
+      "System.Console >= 4.0.0-beta-*",
       "System.Collections >= 4.0.11-beta-*",
       "System.Linq >= 4.0.1-beta-*",
       "System.Threading >= 4.0.11-beta-*",

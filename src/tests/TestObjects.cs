@@ -18,7 +18,13 @@ namespace Xml.Net.Tests
         public override bool Equals(object obj)
         {
             BasicObject bo = (BasicObject)obj;
-            if (bo == null || (StringValue == null && bo.StringValue == null))
+
+            if (bo == null)
+            {
+                return false;
+            }
+
+            if (StringValue == null && bo.StringValue == null)
             {
                 return true;
             }
@@ -46,7 +52,13 @@ namespace Xml.Net.Tests
         public override bool Equals(object obj)
         {
             EmbeddedObject eo = (EmbeddedObject)obj;
-            if (eo == null || (BasicObjectValue == null && eo.BasicObjectValue == null))
+
+            if (eo == null)
+            {
+                return false;
+            }
+
+            if (BasicObjectValue == null && eo.BasicObjectValue == null)
             {
                 return true;
             }
@@ -79,9 +91,14 @@ namespace Xml.Net.Tests
         {
             AdvancedObject ao = (AdvancedObject)obj;
 
-            if (ao == null || (PrimitiveObjectValue == null && ao.PrimitiveObjectValue == null &&
+            if (ao == null)
+            {
+                return false;
+            }
+
+            if (PrimitiveObjectValue == null && ao.PrimitiveObjectValue == null &&
                 CollectionObjectValue == null && ao.CollectionObjectValue == null &&
-                EmbeddedObjectValue == null && ao.EmbeddedObjectValue == null))
+                EmbeddedObjectValue == null && ao.EmbeddedObjectValue == null)
             {
                 return true;
             }
@@ -151,7 +168,12 @@ namespace Xml.Net.Tests
         {
             PrimitiveObject po = (PrimitiveObject)obj;
 
-            if (po == null || (StringValue == null && po.StringValue == null))
+            if (po == null)
+            {
+                return false;
+            }
+
+            if (StringValue == null && po.StringValue == null)
             {
                 return true;
             }
@@ -197,8 +219,13 @@ namespace Xml.Net.Tests
         {
             CollectionObject co = (CollectionObject)obj;
 
-            if (co == null || (CollectionValue == null && co.CollectionValue == null &&
-                ListValue == null && co.ListValue == null))
+            if (co == null)
+            {
+                return false;
+            }
+
+            if (CollectionValue == null && co.CollectionValue == null &&
+                ListValue == null && co.ListValue == null)
             {
                 return true;
             }
@@ -212,5 +239,55 @@ namespace Xml.Net.Tests
         {
             return base.GetHashCode();
         }
+    }
+
+    [XmlConvertCustomElement("AttributeIdentifier")]
+    public class AttributeNamedObject
+    {
+        public AttributeNamedObject()
+        {
+
+        }
+
+        public AttributeNamedObject(string stringValue)
+        {
+            StringValue = stringValue;
+        }
+
+        [XmlConvertCustomElement("CustomElementIdentifier")]
+        public string StringValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            AttributeNamedObject anc = (AttributeNamedObject)obj;
+
+            if (anc == null)
+            {
+                return false;
+            }
+
+            if (StringValue == null && anc.StringValue == null)
+            {
+                return true;
+            }
+
+            return StringValue != null && StringValue.Equals(anc.StringValue);
+        }
+
+        public override int GetHashCode()
+        {
+            return StringValue.GetHashCode();
+        }
+    }
+    
+    public class InterfaceNamedObject : IXmlConvertible
+    {
+        public string XmlIdentifier => "InterfaceIdentifier";
+    }
+
+    [XmlConvertCustomElement("AttributeIdentifier")]
+    public class AttributeInterfaceNamedObject : IXmlConvertible
+    {
+        public string XmlIdentifier => "InterfaceIdentifier";
     }
 }
