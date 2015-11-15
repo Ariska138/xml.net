@@ -3,7 +3,7 @@ set "report_generator=src\packages\ReportGenerator.2.3.4.0\tools\ReportGenerator
 
 set "xunit=src\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe"
 
-set "test_name=src\tests\bin\debug\Xml.Net.Tests.dll"
+set "test_name=src\tests\bin\debug\Xml.Net.Tests.exe"
 
 set "report_name=coverage.xml"
 set "report_path=resources\coverage"

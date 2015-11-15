@@ -15,7 +15,7 @@ namespace Xml.Net.Tests
     {
         public static void Main(string[] args)
         {
-            CustomNameTest.SerializeDeserialize_CustomNamedCollection_Success();
+            Deserialize_InvalidDictionaryXml_IgnoresInvalid();
             Console.ReadLine();
         }
 
@@ -65,12 +65,14 @@ namespace Xml.Net.Tests
         [InlineData(null)]
         public static void SerializeDeserialize_BasicObject_Success(string text)
         {
+            //Test with a simple object
             BasicObject bo = new BasicObject(text);
             SerializeDeserializeObject_Equal_Success(bo);
         }
         
         public static void SerializeDeserialize_EmbeddedObject_Success(string text)
         {
+            //Test with an object containing another object
             EmbeddedObject eo = CreateEmbeddedObject();
             SerializeDeserializeObject_Equal_Success(eo);
         }
@@ -78,6 +80,7 @@ namespace Xml.Net.Tests
         [Fact]
         public static void SerializeDeserialize_PrimitiveObject_Success()
         {
+            //Test with primitive objects
             PrimitiveObject po = CreatePrimitiveObject();
             SerializeDeserializeObject_Equal_Success(po);
         }
@@ -85,13 +88,44 @@ namespace Xml.Net.Tests
         [Fact]
         public static void SerializeDeserialize_CollectionObject_Success()
         {
+            //Test with a collection, list and dictionary
             CollectionObject co = CreateCollectionObject();
             SerializeDeserializeObject_Equal_Success(co);
         }
 
         [Fact]
-        public static void SerializeDeserialize_AdvancedObject_Success()
+        public static void Deserialize_InvalidDictionaryXml_IgnoresInvalid()
         {
+            //Test with XML from a serialized dictionary that I have made invalid (no key and/or value element).
+            string xml = @"<CollectionObject>
+    <DictionaryValue>
+        <Element>
+            <Key>a</Key>
+            <Value>1</Value>
+        </Element>
+        <Element>
+            <Key>b</Key>
+        </Element>
+        <Element>
+            <Value>3</Value>
+        </Element>
+        <Element>
+        </Element>
+        <Element>
+            <Key>e</Key>
+            <Value>5</Value>
+        </Element>
+    </DictionaryValue>
+</CollectionObject>";
+
+            CollectionObject co = XmlConvert.DeserializeObject<CollectionObject>(xml);
+            Assert.Equal(2, co.DictionaryValue.Count);
+        }
+
+        [Fact]
+        public static void SerializeDeserialize_AdvancedObject_Success()
+        { 
+            //Test with an object with embedded objects (which also have embedded objects)
             AdvancedObject ao = CreateAdvancedObject();
             SerializeDeserializeObject_Equal_Success(ao);
         }
@@ -111,17 +145,27 @@ namespace Xml.Net.Tests
             Assert.Throws<XmlException>(() => XmlConvert.DeserializeObject(typeof(string), "hello")); //Xml is invalid
         }
 
+        [Fact]
+        public static void Deserialize_XElement_Invalid()
+        {
+            Assert.Throws<ArgumentNullException>("type", () => XmlConvert.DeserializeXElement(null, new XElement("element"))); //Type is null
+            Assert.Throws<ArgumentNullException>("element", () => XmlConvert.DeserializeXElement(typeof(string), null)); //Element is null
+        }
+
         public static void SerializeDeserializeObject_Equal_Success<T>(T obj1) where T : new()
         {
             T obj2 = default(T);
+            T obj3 = default(T);
             string xml = null;
 
             //Test serialize deserialize string
             Console.WriteLine("Xml.Net String");
             TimeAction(() => xml = XmlConvert.SerializeObject(obj1));
             TimeAction(() => obj2 = XmlConvert.DeserializeObject<T>(xml));
+            TimeAction(() => obj3 = (T)XmlConvert.DeserializeObject(obj1.GetType(), xml));
 
             Assert.Equal(obj1, obj2);
+            Assert.Equal(obj1, obj3);
 
             //Test serialize deserialize XElement
             Console.WriteLine("Xml.Net XElement");
@@ -129,8 +173,10 @@ namespace Xml.Net.Tests
 
             TimeAction(() => element = XmlConvert.SerializeXElement(obj1));
             TimeAction(() => obj2 = XmlConvert.DeserializeXElement<T>(element));
+            TimeAction(() => obj3 = (T)XmlConvert.DeserializeXElement(obj1.GetType(), element));
 
             Assert.Equal(obj1, obj2);
+            Assert.Equal(obj1, obj3);
 
             try
             {

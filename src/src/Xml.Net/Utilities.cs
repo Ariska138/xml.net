@@ -16,8 +16,7 @@ namespace Xml.Net
         /// <param name="property">The property to check.</param>
         public static bool ShouldIgnoreProperty(PropertyInfo property)
         {
-            return property == null ||
-                property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null ||
+            return property.GetCustomAttribute<XmlConvertIgnoredAttribute>() != null ||
                 !property.CanRead ||
                 !property.CanWrite;
         }
@@ -59,9 +58,10 @@ namespace Xml.Net
         /// Gets the custom name of collection elements of a property. Defaults to "Element".
         /// </summary>
         /// <param name="property">The property to use.</param>
+        /// <returns>The XML identifier of elements in the collection.</returns>
         public static string GetCollectionElementName(PropertyInfo property)
         {
-            var elementNameAttribute = property?.GetCustomAttribute<XmlConvertElementsNameAttribute>();
+            var elementNameAttribute = property.GetCustomAttribute<XmlConvertElementsNameAttribute>();
             if (elementNameAttribute?.Name != null)
             {
                 return elementNameAttribute.Name;
@@ -74,23 +74,17 @@ namespace Xml.Net
         /// Gets the custom name of collection key and value elements of a property.
         /// </summary>
         /// <param name="property">The property to use.</param>
+        /// <returns>The XML identifiers of keys and values in the dictionary.</returns>
         public static KeyValuePair<string, string> GetDictionaryElementName(PropertyInfo property)
         {
             var keyName = "Key";
             var valueName = "Value";
 
-            var elementNameAttribute = property?.GetCustomAttribute<XmlConvertKeyValueElementAttribute>();
+            var elementNameAttribute = property.GetCustomAttribute<XmlConvertKeyValueElementAttribute>();
             if (elementNameAttribute != null)
             {
-                if (elementNameAttribute.KeyName != null)
-                {
-                    keyName = elementNameAttribute.KeyName;
-                }
-
-                if (elementNameAttribute.ValueName != null)
-                {
-                    valueName = elementNameAttribute.ValueName;
-                }
+                keyName = elementNameAttribute.KeyName;
+                valueName = elementNameAttribute.ValueName;
             }
 
             return new KeyValuePair<string, string>(keyName, valueName);
@@ -108,7 +102,7 @@ namespace Xml.Net
         {
             Type type = null;
 
-            var typeString = element?.Attribute("Type")?.Value;
+            var typeString = element.Attribute("Type")?.Value;
             if (typeString != null)
             {
                 type = Type.GetType(typeString);

@@ -39,12 +39,14 @@
             Gets the custom name of collection elements of a property. Defaults to "Element".
             </summary>
             <param name="property">The property to use.</param>
+            <returns>The XML identifier of elements in the collection.</returns>
         </member>
         <member name="M:Xml.Net.Utilities.GetDictionaryElementName(System.Reflection.PropertyInfo)">
             <summary>
             Gets the custom name of collection key and value elements of a property.
             </summary>
             <param name="property">The property to use.</param>
+            <returns>The XML identifiers of keys and values in the dictionary.</returns>
         </member>
         <member name="M:Xml.Net.Utilities.GetElementType(System.Xml.Linq.XElement,System.Type,System.Int32)">
             <summary>
@@ -276,6 +278,7 @@
             <param name="property">The property to serialize.</param>
             <param name="parentObject">The object that owns the property.</param>
             <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement representation of the property. May be null if it has no value, cannot be read or written or should be ignored.</returns>
         </member>
         <member name="M:Xml.Net.Serializers.ObjectSerializer.Serialize(System.Object,System.String,System.String,System.String,System.String,Xml.Net.XmlConvertOptions)">
             <summary>
@@ -288,6 +291,7 @@
             <param name="keyNames">The optional custom name of dictionary key elements.</param>
             <param name="valueNames">The optional custom name of dictionary value elements.</param>
             <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement representation of the object.</returns>
         </member>
         <member name="M:Xml.Net.Serializers.ObjectSerializer.DeserializeObject(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
             <summary>
@@ -332,6 +336,7 @@
             <param name="value">The primitive to serialize.</param>
             <param name="name">The name of the primitive to serialize.</param>
             <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement representation of the primitive.</returns>
         </member>
         <member name="M:Xml.Net.Serializers.PrimitiveSerializer.Deserialize(System.Type,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
             <summary>

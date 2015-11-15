@@ -1,68 +1,68 @@
 {
-  "version": "1.0.4",
-  "title": "Xml.Net",
-  "summary": "A high performance XML serialization library for .NET applications",
-  "description": "A high performance XML serialization library for .NET applications",
-  "authors": [ "Hugh Bellamy" ],
-  "copyright": "(C) Hugh Bellamy 2015",
-  "tags": [ "xml xml.net serialization serializer xmlserializer" ],
-  "projectUrl": "https://github.com/hughbe/xml.net",
-  "licenseUrl": "https://raw.githubusercontent.com/hughbe/xml.net/master/LICENSE",
+    "version": "1.0.4",
+    "title": "Xml.Net",
+    "summary": "A high performance XML serialization library for .NET applications",
+    "description": "A high performance XML serialization library for .NET applications",
+    "authors": [ "Hugh Bellamy" ],
+    "copyright": "(C) Hugh Bellamy 2015",
+    "tags": [ "xml xml.net serialization serializer xmlserializer" ],
+    "projectUrl": "https://github.com/hughbe/xml.net",
+    "licenseUrl": "https://raw.githubusercontent.com/hughbe/xml.net/master/LICENSE",
 
-  "frameworks": {
-    "dnxcore50": {
-      "dependencies": {
-        "System.Console": "4.0.0-beta-*",
-        "System.Collections": "4.0.11-beta-*",
-        "System.Linq": "4.0.1-beta-*",
-        "System.Threading": "4.0.11-beta-*",
-        "System.Runtime": "4.0.21-beta-*",
-        "System.Xml.XDocument": "4.0.11-beta-*",
-        "System.Reflection": "4.1.0-beta-*",
-        "System.Reflection.Extensions": "4.0.0"
-      }
-    },
-    "dotnet": {
-      "dependencies": {
-        "System.Console": "4.0.0-beta-*",
-        "System.Collections": "4.0.11-beta-*",
-        "System.Linq": "4.0.1-beta-*",
-        "System.Threading": "4.0.11-beta-*",
-        "System.Runtime": "4.0.21-beta-*",
-        "System.Xml.XDocument": "4.0.11-beta-*",
-        "System.Reflection": "4.1.0-beta-*",
-        "System.Reflection.Extensions": "4.0.0"
-      }
-    },
-    "aspnetcore50": {
-      "dependencies": {
-        "System.Console": "4.0.0-beta-*",
-        "System.Collections": "4.0.11-beta-*",
-        "System.Linq": "4.0.1-beta-*",
-        "System.Threading": "4.0.11-beta-*",
-        "System.Runtime": "4.0.21-beta-*",
-        "System.Xml.XDocument": "4.0.11-beta-*",
-        "System.Reflection": "4.1.0-beta-*",
-        "System.Reflection.Extensions": "4.0.0"
-      }
-    },
-    "aspnet50": {
-      "frameworkAssemblies": {
-        "System.Xml": "4.0.0.0",
-        "System.Xml.Linq": "4.0.0.0"
-      }
-    },
-    "dnx451": {
-      "frameworkAssemblies": {
-        "System.Xml": "4.0.0.0",
-        "System.Xml.Linq": "4.0.0.0"
-      }
-    },
-    "net45": {
-      "frameworkAssemblies": {
-        "System.Xml": "4.0.0.0",
-        "System.Xml.Linq": "4.0.0.0"
-      }
+    "frameworks": {
+        "dnxcore50": {
+            "dependencies": {
+                "System.Console": "4.0.0-beta-*",
+                "System.Collections": "4.0.11-beta-*",
+                "System.Linq": "4.0.1-beta-*",
+                "System.Threading": "4.0.11-beta-*",
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Xml.XDocument": "4.0.11-beta-*",
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.0"
+            }
+        },
+        "dotnet": {
+            "dependencies": {
+                "System.Console": "4.0.0-beta-*",
+                "System.Collections": "4.0.11-beta-*",
+                "System.Linq": "4.0.1-beta-*",
+                "System.Threading": "4.0.11-beta-*",
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Xml.XDocument": "4.0.11-beta-*",
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.0"
+            }
+        },
+        "aspnetcore50": {
+            "dependencies": {
+                "System.Console": "4.0.0-beta-*",
+                "System.Collections": "4.0.11-beta-*",
+                "System.Linq": "4.0.1-beta-*",
+                "System.Threading": "4.0.11-beta-*",
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Xml.XDocument": "4.0.11-beta-*",
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.0"
+            }
+        },
+        "aspnet50": {
+            "frameworkAssemblies": {
+                "System.Xml": "4.0.0.0",
+                "System.Xml.Linq": "4.0.0.0"
+            }
+        },
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Xml": "4.0.0.0",
+                "System.Xml.Linq": "4.0.0.0"
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Xml": "4.0.0.0",
+                "System.Xml.Linq": "4.0.0.0"
+            }
+        }
     }
-  }
 }

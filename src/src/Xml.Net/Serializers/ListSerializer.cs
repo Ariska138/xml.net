@@ -13,11 +13,9 @@ namespace Xml.Net.Serializers
         /// <param name="name">The name of the list to serialize.</param>
         /// <param name="elementNames">The custom name of collection elements.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the list.</returns>
         public static XElement Serialize(object value, string name, string elementNames, XmlConvertOptions options)
         {
-            if (name == null) { return null; }
-            if (value == null) { return null; }
-
             var parentElement = new XElement(name);
 
             var list = (ICollection)value;
@@ -39,13 +37,9 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized list from the XElement.</returns>
         public static object Deserialize(Type type, XElement parent, XmlConvertOptions options)
         {
-            if (type == null) { return null; }
-            if (parent == null) { return null; }
-
             var list = (IList)Activator.CreateInstance(type);
 
             var elements = parent.Elements();
-            if (elements == null) { return list; }
 
             foreach (var element in elements)
             {
@@ -54,15 +48,7 @@ namespace Xml.Net.Serializers
                 if (elementType != null)
                 {
                     var obj = ObjectSerializer.Deserialize(elementType, element, options);
-
-                    if (obj != null)
-                    {
-                        list.Add(obj);
-                    }
-                    else
-                    {
-                        //Error parsing key and/or value
-                    }
+                    list.Add(obj);
                 }
             }
 

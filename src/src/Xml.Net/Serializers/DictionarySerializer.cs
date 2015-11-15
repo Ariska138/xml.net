@@ -16,6 +16,7 @@ namespace Xml.Net.Serializers
         /// <param name="keyNames">The optional custom name of dictionary key elements.</param>
         /// <param name="valueNames">The optional custom name of dictionary value elements.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the dictionary.</returns>
         public static XElement Serialize(object value, string name, string elementNames, string keyNames, string valueNames, XmlConvertOptions options)
         {
             if (name == null) { return null; }
@@ -51,47 +52,32 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized dictionary from the XElement.</returns>
         public static object Deserialize(Type type, XElement parentElement, XmlConvertOptions options)
         {
-            if (type == null) { return null; }
-            if (parentElement == null) { return null; }
-
             var dictionary = (IDictionary)Activator.CreateInstance(type);
 
             var elements = parentElement.Elements();
-            if (elements == null) { return dictionary; }
 
             foreach (var element in elements)
             {
-                var keyValueElements = element.Elements();
-                if (keyValueElements == null) { return dictionary; }
-
-                var keyValueElementsList = new List<XElement>(keyValueElements);
-
-                if (keyValueElementsList.Count < 2)
+                var keyValueElements = new List<XElement>(element.Elements());
+                
+                if (keyValueElements.Count < 2)
                 {
                     //No fully formed key value pair
-                    return dictionary;
+                    continue;
                 }
 
-                var keyElement = keyValueElementsList[0];
-                var valueElement = keyValueElementsList[1];
+                var keyElement = keyValueElements[0];
+                var valueElement = keyValueElements[1];
 
                 var keyType = Utilities.GetElementType(keyElement, type, 0);
                 var valueType = Utilities.GetElementType(valueElement, type, 1);
-
-
+                
                 if (keyType != null && valueType != null)
                 {
                     var key = ObjectSerializer.Deserialize(keyType, keyElement, options);
                     var value = ObjectSerializer.Deserialize(valueType, valueElement, options);
 
-                    if (key != null && value != null)
-                    {
-                        dictionary.Add(key, value);
-                    }
-                    else
-                    {
-                        //Error parsing key and/or value
-                    }
+                    dictionary.Add(key, value);
                 }
             }
 

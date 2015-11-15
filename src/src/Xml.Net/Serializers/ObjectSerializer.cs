@@ -36,11 +36,9 @@ namespace Xml.Net.Serializers
         /// <param name="property">The property to serialize.</param>
         /// <param name="parentObject">The object that owns the property.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the property. May be null if it has no value, cannot be read or written or should be ignored.</returns>
         private static XElement Serialize(PropertyInfo property, object parentObject, XmlConvertOptions options)
         {
-            if (property == null) { return null; }
-            if (parentObject == null) { return null; }
-
             if (Utilities.ShouldIgnoreProperty(property)) //Either we ignore or can't read the property
             {
                 return null;
@@ -87,11 +85,9 @@ namespace Xml.Net.Serializers
         /// <param name="keyNames">The optional custom name of dictionary key elements.</param>
         /// <param name="valueNames">The optional custom name of dictionary value elements.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the object.</returns>
         public static XElement Serialize(object value, string name, string elementNames, string keyNames, string valueNames, XmlConvertOptions options)
-        {
-            if (value == null) { return null; }
-            if (name == null) { return null; }
-            
+        {            
             XElement childElement = null;
 
             var objectType = ObjectType.From(value);
@@ -156,10 +152,6 @@ namespace Xml.Net.Serializers
         /// <param name="options">Indicates how the output is deserialized.</param>
         private static void DeserializeProperty(PropertyInfo property, object parentObject, XElement parentElement, XmlConvertOptions options)
         {
-            if (property == null) { return; }
-            if (parentObject == null) { return; }
-            if (parentElement == null) { return; }
-
             var name = Utilities.GetIdentifier(property);
             var type = property.PropertyType;
 

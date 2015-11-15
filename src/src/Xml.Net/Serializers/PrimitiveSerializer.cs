@@ -11,14 +11,12 @@ namespace Xml.Net.Serializers
         /// <param name="value">The primitive to serialize.</param>
         /// <param name="name">The name of the primitive to serialize.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the primitive.</returns>
         public static XElement Serialize(object value, string name, XmlConvertOptions options)
         {
-            if (name == null) { return null; }
-            if (value == null) { return null; }
-
             var stringValue = Convert.ToString(value);
-            var element = new XElement(name, stringValue);
 
+            var element = new XElement(name, stringValue);
             return element;
         }
         
@@ -31,17 +29,7 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized fundamental primitive from the XElement.</returns>
         public static object Deserialize(Type type, XElement parentElement, XmlConvertOptions options)
         {
-            if (type == null) { return null; }
-            if (parentElement == null) { return null; }
-
-            try
-            {
-                return Convert.ChangeType(parentElement.Value, type);
-            }
-            catch (InvalidCastException)
-            {
-                return null;
-            }
+            return Convert.ChangeType(parentElement.Value, type);
         }
     }
 }
