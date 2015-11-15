@@ -246,7 +246,6 @@ namespace Xml.Net.Tests
     {
         public AttributeNamedObject()
         {
-
         }
 
         public AttributeNamedObject(string stringValue)

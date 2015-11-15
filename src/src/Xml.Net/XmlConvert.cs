@@ -1,138 +1,162 @@
 ﻿using System;
-using System.Collections;
-using System.Reflection;
 using System.Xml.Linq;
+using Xml.Net.Serializers;
 
 namespace Xml.Net
 {
     /// <summary>
-    /// The class that serializes or deserializes .NET objects.
+    /// The class that serializes and deserializes .NET objects.
     /// </summary>
-    public static partial class XmlConvert
+    public static class XmlConvert
     {
         /// <summary>
         /// Provides the default options for formatting, serializing and deserializing objects.
         /// </summary>
         private const XmlConvertOptions DefaultConvertOptions = XmlConvertOptions.None;
-
         /// <summary>
-        /// Gets the XML identifier of the class from an object of that class.
+        /// Serializes the specified object to a XML string. 
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
-        /// <param name="obj">The object to use.</param>
-        /// <returns>The XML identifier of the class.</returns>
-        private static string GetClassIdentifier(object obj)
+        /// <param name="value">The object to serialize.</param>
+        /// <returns>The XML string representation of the object.</returns>
+        public static string SerializeObject(object value)
         {
-            var xmlConvertible = obj as IXmlConvertible;
-            if (xmlConvertible != null)
-            {
-                return xmlConvertible.XmlIdentifier;
-            }
-
-            var typeInfo = obj.GetType().GetTypeInfo();
-            return GetMemberIdentifier(typeInfo);
+            return SerializeObject(value, DefaultConvertOptions);
         }
 
         /// <summary>
-        /// Gets the XML identifier of the member.
+        /// Serializes the specified object to a XML string using options.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
-        /// <param name="memberInfo">The information about the member to use.</param>
-        /// <returns>The XML identifier of the member.</returns>
-        private static string GetMemberIdentifier(MemberInfo memberInfo)
+        /// <param name="value">The object to serialize.</param>
+        /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XML string representation of the object.</returns>
+        public static string SerializeObject(object value, XmlConvertOptions options)
         {
-            var nameAttribute = (XmlConvertCustomElementAttribute)memberInfo.GetCustomAttribute(typeof(XmlConvertCustomElementAttribute));
-            if (nameAttribute != null)
-            {
-                return nameAttribute.Name;
-            }
-
-            return memberInfo.Name;
+            return SerializeXElement(value, options).ToString();
         }
 
         /// <summary>
-        /// Gets the name-specified child XElement of the parent XElement.
+        /// Serializes the specified object to a XElement.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
-        /// <param name="name">The name of the child XElement to get.</param>
-        /// <param name="parent">The parent of the child XElement to get.</param>
-        /// <returns>The name-specified child XElement of the parent XElement.</returns>
-        private static XElement GetChildElement(string name, XElement parent)
+        /// <param name="value">The object to serialize.</param>
+        /// <returns>The XElement representation of the object.</returns>
+        public static XElement SerializeXElement(object value)
         {
-            var element = parent.Element(name);
-            if (element == null) { /*No such element*/ }
-
-            return element;
+            return SerializeXElement(value, DefaultConvertOptions);
         }
 
         /// <summary>
-        /// Checks if the object is a fundamental primitive object (e.g string, int etc.).
+        /// Serializes the specified object to a XElement using options.
+        /// Note: properties without both a getter AND setter  will be ignored. Add a private setter if you wish to include the property in the XML output.
         /// </summary>
-        /// <param name="value">The object to check.</param>
-        /// <returns>The boolean value indicating whether the object is a fundamental primitive.</returns>
-        private static bool IsFundamentalPrimitive(object value)
+        /// <param name="value">The object to serialize.</param>
+        /// <param name="options">Indicates how the output is formatted or serialized.</param>
+        /// <returns>The XElement representation of the object.</returns>
+        public static XElement SerializeXElement(object value, XmlConvertOptions options)
         {
-            return IsFundamentalPrimitive(value.GetType());
+            if (value == null) { throw new ArgumentNullException(nameof(value)); }
+
+            var identifier = Utilities.GetIdentifier(value);
+            return ObjectSerializer.Serialize(value, identifier, options);
         }
 
         /// <summary>
-        /// Checks if the type is a fundamental primitive object (e.g string, int etc.).
+        /// Deserializes the XML string to the specified .NET type.
         /// </summary>
-        /// <param name="type">The type to check.</param>
-        /// <returns>The boolean value indicating whether the type is a fundamental primitive.</returns>
-        private static bool IsFundamentalPrimitive(Type type) => (
-            type.Equals(typeof(string))
-            || type.Equals(typeof(char))
-            || type.Equals(typeof(sbyte))
-            || type.Equals(typeof(short))
-            || type.Equals(typeof(int))
-            || type.Equals(typeof(long))
-            || type.Equals(typeof(byte))
-            || type.Equals(typeof(ushort))
-            || type.Equals(typeof(uint))
-            || type.Equals(typeof(ulong))
-            || type.Equals(typeof(double))
-            || type.Equals(typeof(float))
-            || type.Equals(typeof(decimal))
-            || type.Equals(typeof(bool))
-            || type.Equals(typeof(DateTime))
-            );
-
-        /// <summary>
-        /// Checks if the object is a list (e.g List<T>, Array etc.).
-        /// </summary>
-        /// <param name="value">The object to check.</param>
-        /// <returns>The boolean value indicating whether the object is a list.</returns>
-        private static bool IsList(object value)
+        /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+        /// <param name="value">The XML string to deserialize.</param>
+        /// <returns>The deserialized object from the XML string.</returns>
+        public static T DeserializeObject<T>(string value) where T : new()
         {
-            return IsList(value.GetType());
+            return DeserializeObject<T>(value, DefaultConvertOptions);
         }
 
         /// <summary>
-        /// Checks if the type is a list (e.g List<T>, Array etc.).
+        /// Deserializes the XML string to the specified .NET type using options.
         /// </summary>
-        /// <param name="type">The type to check.</param>
-        /// <returns>The boolean value indicating whether the type is a list.</returns>
-        private static bool IsList(Type type)
+        /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="options">Indicates how the output is deserialized.</param>
+        /// <returns>The deserialized object from the XML string.</returns>
+        public static T DeserializeObject<T>(string value, XmlConvertOptions options) where T : new()
         {
-            return typeof(ICollection).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return (T)DeserializeObject(typeof(T), value, options);
         }
 
         /// <summary>
-        /// Checks if the object is a dictionary (e.g Dictionary<TKey, TValue>, HashTable etc.).
+        /// Deserializes the XML string to the specified .NET type.
         /// </summary>
-        /// <param name="value">The object to check.</param>
-        /// <returns>The boolean value indicating whether the type is a dictionary.</returns>
-        private static bool IsDictionary(object value)
+        /// <param name="type">The type of the deserialized .NET object.</param>
+        /// <param name="value">The XML string to deserialize.</param>
+        /// <returns>The deserialized object from the XML string.</returns>
+        public static object DeserializeObject(Type type, string value)
         {
-            return IsDictionary(value.GetType());
+            return DeserializeObject(type, value, DefaultConvertOptions);
         }
 
         /// <summary>
-        /// Checks if the object is a dictionary (e.g Dictionary<TKey, TValue>, HashTable etc.).
+        /// Deserializes the XML string to the specified .NET type using options.
         /// </summary>
-        /// <param name="value">The object to check.</param>
-        /// <returns>The boolean value indicating whether the object is a dictionary.</returns>
-        private static bool IsDictionary(Type type)
+        /// <param name="type">The type of the deserialized .NET object.</param>
+        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="options">Indicates how the output is deserialized.</param>
+        /// <returns>The deserialized object from the XML string.</returns>
+        public static object DeserializeObject(Type type, string value, XmlConvertOptions options)
         {
-            return typeof(IDictionary).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            if (value == null) { throw new ArgumentNullException(nameof(value)); }
+
+            return DeserializeXElement(type, XElement.Parse(value), options);
+        }
+
+        /// <summary>
+        /// Deserializes the XElement to the specified .NET type.
+        /// </summary>
+        /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+        /// <param name="element">The XElement to deserialize.</param>
+        /// <returns>The deserialized object from the XElement.</returns>
+        public static T DeserializeXElement<T>(XElement element) where T : new()
+        {
+            return DeserializeXElement<T>(element, DefaultConvertOptions);
+        }
+
+        /// <summary>
+        /// Deserializes the XElement to the specified .NET type using options.
+        /// </summary>
+        /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
+        /// <param name="element">The XElement to deserialize.</param>
+        /// <param name="options">Indicates how the output is deserialized.</param>
+        /// <returns>The deserialized object from the XElement.</returns>
+        public static T DeserializeXElement<T>(XElement element, XmlConvertOptions options)
+        {
+            return (T)DeserializeXElement(typeof(T), element, options);
+        }
+
+        /// <summary>
+        /// Deserializes the XElement to the specified .NET type.
+        /// </summary>
+        /// <param name="type">The type of the deserialized .NET object.</param>
+        /// <param name="element">The XElement to deserialize.</param>
+        /// <returns>The deserialized object from the XElement.</returns>
+        public static object DeserializeXElement(Type type, XElement element)
+        {
+            return DeserializeXElement(type, element, DefaultConvertOptions);
+        }
+
+        /// <summary>
+        /// Deserializes the XElement to the specified .NET type using options.
+        /// </summary>
+        /// <param name="type">The type of the deserialized .NET object.</param>
+        /// <param name="element">The XElement to deserialize.</param>
+        /// <param name="options">Indicates how the output is deserialized.</param>
+        /// <returns>The deserialized object from the XElement.</returns>
+        public static object DeserializeXElement(Type type, XElement element, XmlConvertOptions options)
+        {
+            if (type == null) { throw new ArgumentNullException(nameof(type)); }
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
+
+            return ObjectSerializer.DeserializeObject(type, element, options);
         }
     }
 }

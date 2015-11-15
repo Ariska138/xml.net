@@ -14,7 +14,7 @@ namespace Xml.Net.Tests
     {
         public static void Main(string[] args)
         {
-            //CustomNameTest.SerializeDeserialize_CustomName_Success();
+            SerializeDeserialize_AdvancedObject_Success();
             Console.ReadLine();
         }
 
@@ -94,9 +94,7 @@ namespace Xml.Net.Tests
         public static void SerializeObject_Invalid()
         {
             Assert.Throws<ArgumentNullException>("value", () => XmlConvert.SerializeObject(null)); //Object is null
-            Assert.Throws<ArgumentException>("value", () => XmlConvert.SerializeObject("string")); //Object is a fundamental primitive
         }
-
 
         public static void SerializeDeserializeObject_Equal_Success<T>(T obj1) where T : new()
         {

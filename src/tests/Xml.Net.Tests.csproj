@@ -86,7 +86,7 @@
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)artifacts\bin\Xml.Net\Debug\net45\Xml.Net.dll" "$(ProjectDir)Xml.Net.dll"
 copy "$(SolutionDir)artifacts\bin\Xml.Net\Debug\net45\Xml.Net.pdb" "$(ProjectDir)Xml.Net.pdb"
-copy "$(SolutionDir)artifacts\bin\Xml.Net\Debug\net45\Xml.Net.xml" "$(ProjectDir)Xml.net.xml"
+copy "$(SolutionDir)artifacts\bin\Xml.Net\Debug\net45\Xml.Net.xml" "$(ProjectDir)Xml.Net.xml"
 </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
