@@ -1,23 +1,64 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
+
 using Xunit;
 
 namespace Xml.Net.Tests
 {
     public static class CustomNameTest
     {
-        public static void Ctor_Name_Success()
+        [Fact]
+        public static void Ctor_ElementName_Success()
         {
-            XmlConvertCustomElementAttribute element = new XmlConvertCustomElementAttribute("hello");
-            Assert.Equal("hello", element.Name);
+            XmlConvertCustomElementAttribute attribute = new XmlConvertCustomElementAttribute("hello");
+            Assert.Equal("hello", attribute.Name);
         }
 
-        public static void Ctor_Name_Invalid()
+        [Fact]
+        public static void Ctor_ElementName_Invalid()
         {
             Assert.Throws<ArgumentNullException>("name", () => new XmlConvertCustomElementAttribute(null)); //Name is null
 
             Assert.Throws<ArgumentException>("name", () => new XmlConvertCustomElementAttribute("")); //Name is empty
             Assert.Throws<ArgumentException>("name", () => new XmlConvertCustomElementAttribute("  ")); //Name is whitespace
+        }
+
+        [Fact]
+        public static void Ctor_ElementsName_Success()
+        {
+            XmlConvertElementsNameAttribute attribute = new XmlConvertElementsNameAttribute("hello");
+            Assert.Equal("hello", attribute.Name);
+        }
+
+        [Fact]
+        public static void Ctor_ElementsName_Invalid()
+        {
+            Assert.Throws<ArgumentNullException>("name", () => new XmlConvertElementsNameAttribute(null)); //Name is null
+
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertElementsNameAttribute("")); //Name is empty
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertElementsNameAttribute("  ")); //Name is whitespace
+        }
+
+        [Fact]
+        public static void Ctor_KeyNameValueName_Success()
+        {
+            XmlConvertKeyValueElementAttribute attribute = new XmlConvertKeyValueElementAttribute("hello", "goodbye");
+            Assert.Equal("hello", attribute.KeyName);
+            Assert.Equal("goodbye", attribute.ValueName);
+        }
+
+        [Fact]
+        public static void Ctor_KeyNameValueName_Invalid()
+        {
+            Assert.Throws<ArgumentNullException>("keyName", () => new XmlConvertKeyValueElementAttribute(null, "hello")); //Key name is null
+            Assert.Throws<ArgumentNullException>("keyName", () => new XmlConvertKeyValueElementAttribute("hello", null)); //Value name is null
+
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("", "hello")); //Key name is empty
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("  ", "hello")); //Key name is whitespace
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("hello", "")); //Value name is empty
+            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("hello", "  ")); //Key name is whitespace
         }
 
         [Fact]
@@ -52,6 +93,26 @@ namespace Xml.Net.Tests
             XElement element = XmlConvert.SerializeXElement(aino);
 
             Assert.Equal("InterfaceIdentifier", element.Name);
+        }
+
+        [Fact]
+        public static void SerializeDeserialize_CustomNamedCollection_Success()
+        {
+            CustomNameCollectionObject ino = new CustomNameCollectionObject(new Collection<string>
+            {
+                "1",
+                "2",
+                "3"
+            }, new Dictionary<string, string>
+            {
+                { "a", "1" },
+                { "b", "2" },
+                { "c", "3" },
+            });
+
+            XElement element = XmlConvert.SerializeXElement(ino);
+
+            //Assert.Equal("InterfaceIdentifier", element.Name);
         }
     }
 }

@@ -27,13 +27,13 @@ namespace Xml.Net.Serializers
             {
                 return Primitive;
             }
-            if (IsList(type))
-            {
-                return List;
-            }
             if (IsDictionary(type))
             {
                 return Dictionary;
+            }
+            if (IsList(type))
+            {
+                return List;
             }
 
             return Other;

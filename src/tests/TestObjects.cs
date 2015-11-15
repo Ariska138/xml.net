@@ -206,14 +206,16 @@ namespace Xml.Net.Tests
     {
         public CollectionObject() { }
 
-        public Collection<string> CollectionValue { get; set; }
-        public List<string> ListValue { get; set; }
-
-        public CollectionObject(Collection<string> c, List<string> l)
+        public CollectionObject(Collection<string> c, List<string> l, Dictionary<string, string> d)
         {
             CollectionValue = c;
             ListValue = l;
+            DictionaryValue = d;
         }
+
+        public Collection<string> CollectionValue { get; set; }
+        public List<string> ListValue { get; set; }
+        public Dictionary<string, string> DictionaryValue { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -225,14 +227,16 @@ namespace Xml.Net.Tests
             }
 
             if (CollectionValue == null && co.CollectionValue == null &&
-                ListValue == null && co.ListValue == null)
+                ListValue == null && co.ListValue == null &&
+                DictionaryValue == null && co.DictionaryValue == null)
             {
                 return true;
             }
 
             return
                 CollectionValue != null && CollectionValue.Count.Equals(co.CollectionValue.Count) &&
-                ListValue != null && ListValue.Count.Equals(co.ListValue.Count);
+                ListValue != null && ListValue.Count.Equals(co.ListValue.Count) &&
+                DictionaryValue != null && DictionaryValue.Count.Equals(co.DictionaryValue.Count);
         }
 
         public override int GetHashCode()
@@ -278,7 +282,7 @@ namespace Xml.Net.Tests
             return StringValue.GetHashCode();
         }
     }
-    
+
     public class InterfaceNamedObject : IXmlConvertible
     {
         public string XmlIdentifier => "InterfaceIdentifier";
@@ -288,5 +292,58 @@ namespace Xml.Net.Tests
     public class AttributeInterfaceNamedObject : IXmlConvertible
     {
         public string XmlIdentifier => "InterfaceIdentifier";
+    }
+
+    public class CustomNameCollectionObject
+    {
+        public CustomNameCollectionObject() { }
+
+        public CustomNameCollectionObject(Collection<string> c, Dictionary<string, string> d)
+        {
+            CollectionValue = c;
+            DictionaryValue = d;
+        }
+
+        [XmlConvertElementsName("CollectionElement")]
+        public Collection<string> CollectionValue { get; set; }
+
+        [XmlConvertElementsName("DictionaryElement")]
+        [XmlConvertKeyValueElement("DictionaryKey", "DictionaryValue")]
+        public Dictionary<string, string> DictionaryValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            CustomNameCollectionObject co = (CustomNameCollectionObject)obj;
+
+            if (co == null)
+            {
+                return false;
+            }
+
+            if (CollectionValue == null && co.CollectionValue == null &&
+                DictionaryValue == null && co.DictionaryValue == null)
+            {
+                return true;
+            }
+
+            return
+                CollectionValue != null && CollectionValue.Count.Equals(co.CollectionValue.Count) &&
+                DictionaryValue != null && DictionaryValue.Count.Equals(co.DictionaryValue.Count);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    public class IgnoredPropertyObject
+    {
+        public IgnoredPropertyObject()
+        {
+        }
+
+        [XmlConvertIgnored]
+        public string Value { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace Xml.Net.Tests
         public static void Main(string[] args)
         {
             SerializeDeserialize_AdvancedObject_Success();
+            CustomNameTest.SerializeDeserialize_CustomNamedCollection_Success();
             Console.ReadLine();
         }
 
@@ -45,6 +46,11 @@ namespace Xml.Net.Tests
                 "d",
                 "e",
                 "f"
+            }, new Dictionary<string, string>
+            {
+                { "a", "1" },
+                { "b", "2" },
+                { "c", "3" },
             });
         }
 

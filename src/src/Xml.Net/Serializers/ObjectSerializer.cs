@@ -61,18 +61,17 @@ namespace Xml.Net.Serializers
             string valueNames = null;
 
             var objectType = ObjectType.From(property.PropertyType);
-
-            if (objectType == ObjectType.List)
-            {
-                elementNames = Utilities.GetCollectionElementName(property);
-            }
-            else if (objectType == ObjectType.Dictionary)
+            if (objectType == ObjectType.Dictionary)
             {
                 elementNames = Utilities.GetCollectionElementName(property);
 
                 var dictionaryNames = Utilities.GetDictionaryElementName(property);
                 keyNames = dictionaryNames.Key;
                 valueNames = dictionaryNames.Value;
+            }
+            else if (objectType == ObjectType.List)
+            {
+                elementNames = Utilities.GetCollectionElementName(property);
             }
 
             return Serialize(propertyValue, propertyName, elementNames, keyNames, valueNames, options);
@@ -101,12 +100,6 @@ namespace Xml.Net.Serializers
             {
                 childElement = PrimitiveSerializer.Serialize(value, name, options);
             }
-            else if (objectType == ObjectType.List)
-            {
-                if (elementNames == null) { elementNames = "Element"; }
-
-                childElement = ListSerializer.Serialize(value, name, elementNames, options);
-            }
             else if (objectType == ObjectType.Dictionary)
             {
                 if (elementNames == null) { elementNames = "Element"; }
@@ -114,6 +107,12 @@ namespace Xml.Net.Serializers
                 if (valueNames == null) { valueNames = "Value"; }
 
                 childElement = DictionarySerializer.Serialize(value, name, elementNames, keyNames, valueNames, options);
+            }
+            else if (objectType == ObjectType.List)
+            {
+                if (elementNames == null) { elementNames = "Element"; }
+
+                childElement = ListSerializer.Serialize(value, name, elementNames, options);
             }
             else
             {
@@ -201,13 +200,13 @@ namespace Xml.Net.Serializers
             {
                 return PrimitiveSerializer.Deserialize(type, parentElement, options);
             }
-            else if (objectType == ObjectType.List)
-            {
-                return ListSerializer.Deserialize(type, parentElement, options);
-            }
             else if (objectType == ObjectType.Dictionary)
             {
                 return DictionarySerializer.Deserialize(type, parentElement, options);
+            }
+            else if (objectType == ObjectType.List)
+            {
+                return ListSerializer.Deserialize(type, parentElement, options);
             }
             else
             {
