@@ -62,12 +62,11 @@ namespace Xml.Net
         public static string GetCollectionElementName(PropertyInfo property)
         {
             var elementNameAttribute = property.GetCustomAttribute<XmlConvertElementsNameAttribute>();
-            if (elementNameAttribute?.Name != null)
+            if (elementNameAttribute != null)
             {
                 return elementNameAttribute.Name;
             }
-
-            return "Element";
+            return null;
         }
 
         /// <summary>
@@ -77,17 +76,13 @@ namespace Xml.Net
         /// <returns>The XML identifiers of keys and values in the dictionary.</returns>
         public static KeyValuePair<string, string> GetDictionaryElementName(PropertyInfo property)
         {
-            var keyName = "Key";
-            var valueName = "Value";
-
-            var elementNameAttribute = property.GetCustomAttribute<XmlConvertKeyValueElementAttribute>();
-            if (elementNameAttribute != null)
+            var keyValueNameAttribute = property.GetCustomAttribute<XmlConvertKeyValueElementAttribute>();
+            if (keyValueNameAttribute != null)
             {
-                keyName = elementNameAttribute.KeyName;
-                valueName = elementNameAttribute.ValueName;
+                return new KeyValuePair<string, string>(keyValueNameAttribute.KeyName, keyValueNameAttribute.ValueName);
             }
 
-            return new KeyValuePair<string, string>(keyName, valueName);
+            return new KeyValuePair<string, string>(null, null);
         }
 
 
@@ -102,18 +97,16 @@ namespace Xml.Net
         {
             Type type = null;
 
-            var typeString = element.Attribute("Type")?.Value;
-            if (typeString != null)
+            var typeELement = element.Attribute("Type");
+            if (typeELement != null)
             {
-                type = Type.GetType(typeString);
+                type = Type.GetType(typeELement.Value);
             }
 
             if (type == null)
             {
-                var genericArguments = parentType?.GetTypeInfo().GenericTypeArguments;
-                if (genericArguments != null && 
-                    genericArgumentIndex >= 0 &&
-                    genericArguments.Length > genericArgumentIndex)
+                var genericArguments = parentType.GetTypeInfo().GenericTypeArguments;
+                if (genericArguments.Length > genericArgumentIndex)
                 {
                     type = genericArguments[genericArgumentIndex];
                 }
@@ -137,28 +130,23 @@ namespace Xml.Net
             parent.Add(child);
         }
 
-        /*
+
         /// <summary>
-        /// Formats and adds a serialized object XElement to a parent element with options.
+        /// Formats a serialized XElement with options.
         /// </summary>
         /// <param name="value">The object serialized.</param>
         /// <param name="element">The serialized XElement of the object.</param>
-        /// <param name="parentElement">The parent element of the serialized XElement.</param>
         /// <param name="options">Indicates how the output is formatted or serialized.</param>
-        private static void SetupSerializedElement(object value, XElement element, XElement parentElement, XmlConvertOptions options)
+        /// <returns>The XElement that was formatted with options. </returns>
+        public static XElement SetupSerializedElement(object value, XElement element, XmlConvertOptions options)
         {
-            if (value == null) { return; }
-            if (element == null) { return; }
-            if (parentElement == null) { return; }
-
             if (!options.HasFlag(XmlConvertOptions.ExcludeTypes))
             {
                 var typeName = value.GetType().FullName;
                 element.Add(new XAttribute("Type", typeName));
             }
-
-            parentElement.Add(element);
-        }*/
+            return element;
+        }
 
         /// <summary>
         /// Gets the name-specified child XElement of the parent XElement.

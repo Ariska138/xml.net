@@ -9,6 +9,15 @@
             The interface that specifies a custom XML identifier for serialized elements - this overrides any attributes on properties of the class.
             </summary>
         </member>
+        <member name="M:Xml.Net.ObjectType.IsPrimitive(System.Type)">
+            <summary>
+            Checks if the type is a fundamental primitive object (e.g string, int etc.).
+            </summary>
+            <param name="type">The type to check.</param>
+            <returns>The boolean value indicating whether the type is a fundamental primitive.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.ObjectType.IsList(System.Type)" -->
+        <!-- Badly formed XML comment ignored for member "M:Xml.Net.ObjectType.IsDictionary(System.Type)" -->
         <member name="T:Xml.Net.Utilities">
             <summary>
             A selection of common methods called from multiple classes.
@@ -63,6 +72,15 @@
             </summary>
             <param name="child">The child XElement to add to the parent XElement.</param>
             <param name="parent">The parent XElement to add the child XElement to.</param>
+        </member>
+        <member name="M:Xml.Net.Utilities.SetupSerializedElement(System.Object,System.Xml.Linq.XElement,Xml.Net.XmlConvertOptions)">
+            <summary>
+            Formats a serialized XElement with options.
+            </summary>
+            <param name="value">The object serialized.</param>
+            <param name="element">The serialized XElement of the object.</param>
+            <param name="options">Indicates how the output is formatted or serialized.</param>
+            <returns>The XElement that was formatted with options. </returns>
         </member>
         <member name="M:Xml.Net.Utilities.GetChildElement(System.String,System.Xml.Linq.XElement)">
             <summary>
@@ -320,15 +338,6 @@
             <param name="options">Indicates how the output is deserialized.</param>
             <returns>The deserialized object from the XElement.</returns>
         </member>
-        <member name="M:Xml.Net.Serializers.ObjectType.IsPrimitive(System.Type)">
-            <summary>
-            Checks if the type is a fundamental primitive object (e.g string, int etc.).
-            </summary>
-            <param name="type">The type to check.</param>
-            <returns>The boolean value indicating whether the type is a fundamental primitive.</returns>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:Xml.Net.Serializers.ObjectType.IsList(System.Type)" -->
-        <!-- Badly formed XML comment ignored for member "M:Xml.Net.Serializers.ObjectType.IsDictionary(System.Type)" -->
         <member name="M:Xml.Net.Serializers.PrimitiveSerializer.Serialize(System.Object,System.String,Xml.Net.XmlConvertOptions)">
             <summary>
             Serializes a fundamental primitive object (e.g. string, int etc.) into a XElement using options.

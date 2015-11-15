@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace Xml.Net.Serializers
@@ -19,10 +20,6 @@ namespace Xml.Net.Serializers
         /// <returns>The XElement representation of the dictionary.</returns>
         public static XElement Serialize(object value, string name, string elementNames, string keyNames, string valueNames, XmlConvertOptions options)
         {
-            if (name == null) { return null; }
-            if (value == null) { return null; }
-            if (elementNames == null) { return null; }
-
             var element = new XElement(name);
 
             var dictionary = (IDictionary)value;
@@ -42,7 +39,6 @@ namespace Xml.Net.Serializers
             return element;
         }
 
-
         /// <summary>
         /// Deserializes the XElement to the dictionary (e.g. Dictionary<TKey, TValue>, HashTable of a specified type using options.
         /// </summary>
@@ -52,7 +48,15 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized dictionary from the XElement.</returns>
         public static object Deserialize(Type type, XElement parentElement, XmlConvertOptions options)
         {
-            var dictionary = (IDictionary)Activator.CreateInstance(type);
+            IDictionary dictionary;
+            if (type.GetTypeInfo().IsInterface)
+            {
+                dictionary = new Dictionary<object, object>();
+            }
+            else
+            {
+                dictionary = (IDictionary)Activator.CreateInstance(type);
+            }
 
             var elements = parentElement.Elements();
 
@@ -78,6 +82,10 @@ namespace Xml.Net.Serializers
                     var value = ObjectSerializer.Deserialize(valueType, valueElement, options);
 
                     dictionary.Add(key, value);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Could not deserialize this non generic dictionary without more type information.");
                 }
             }
 

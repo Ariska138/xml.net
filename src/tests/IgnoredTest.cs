@@ -18,7 +18,10 @@ namespace Xml.Net.Tests
 
             XElement element = XmlConvert.SerializeXElement(ipo);
 
-            Assert.Null(element.Element("Value"));
+            Assert.Null(element.Element("IgnoredValue")); //Property is ignored
+
+            Assert.Null(element.Element("NoGetterValue")); //Property has no getter
+            Assert.Null(element.Element("NoSetterValue")); //Property has no setter
         }
     }
 }

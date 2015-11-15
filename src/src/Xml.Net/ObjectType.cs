@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Reflection;
 
-namespace Xml.Net.Serializers
+namespace Xml.Net
 {
     internal struct ObjectType
     {
-        public static ObjectType Primitive => new ObjectType(0);
-        public static ObjectType List => new ObjectType(1);
-        public static ObjectType Dictionary => new ObjectType(2);
+        public static ObjectType Primitive => new ObjectType(1);
+        public static ObjectType List => new ObjectType(2);
+        public static ObjectType Dictionary => new ObjectType(3);
         public static ObjectType Other => new ObjectType(10);
 
         private ObjectType(int id)
@@ -39,7 +39,7 @@ namespace Xml.Net.Serializers
             return Other;
         }
 
-        public int Id { get; }
+        private int Id { get; }
 
         public override bool Equals(object obj)
         {

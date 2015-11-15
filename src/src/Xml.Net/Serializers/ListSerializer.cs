@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace Xml.Net.Serializers
@@ -37,18 +39,30 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized list from the XElement.</returns>
         public static object Deserialize(Type type, XElement parent, XmlConvertOptions options)
         {
-            var list = (IList)Activator.CreateInstance(type);
+            IList list;
+            if (type.GetTypeInfo().IsInterface)
+            {
+                list = new List<object>();
+            }
+            else
+            {
+                list = (IList)Activator.CreateInstance(type);
+            }
 
             var elements = parent.Elements();
 
             foreach (var element in elements)
             {
                 var elementType = Utilities.GetElementType(element, type, 0);
-
+                
                 if (elementType != null)
                 {
                     var obj = ObjectSerializer.Deserialize(elementType, element, options);
                     list.Add(obj);
+                }
+                else
+                { 
+                        throw new InvalidOperationException("Could not deserialize this non generic dictionary without more type information.");
                 }
             }
 

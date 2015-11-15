@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -245,6 +246,44 @@ namespace Xml.Net.Tests
         }
     }
 
+    public class ICollectionObject
+    {
+        public ICollectionObject() { }
+
+        public ICollectionObject(IList il, IDictionary id)
+        {
+            IListValue = il;
+            IDictionaryValue = id;
+        }
+
+        public IList IListValue { get; set; }
+        public IDictionary IDictionaryValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            ICollectionObject ico = (ICollectionObject)obj;
+
+            if (ico == null)
+            {
+                return false;
+            }
+
+            if (IListValue == null && ico.IListValue == null &&
+                IDictionaryValue == null && ico.IDictionaryValue == null)
+            {
+                return true;
+            }
+
+            return IListValue != null && IListValue.Count.Equals(ico.IListValue.Count) &&
+                IDictionaryValue != null && IDictionaryValue.Count.Equals(ico.IDictionaryValue.Count);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
     [XmlConvertCustomElement("AttributeIdentifier")]
     public class AttributeNamedObject
     {
@@ -344,6 +383,17 @@ namespace Xml.Net.Tests
         }
 
         [XmlConvertIgnored]
-        public string Value { get; set; }
+        public string IgnoredValue { get; set; }
+
+        private string _noGetterValue;
+        public string NoGetterValue
+        {
+            set
+            {
+                _noGetterValue = value;
+            }
+        }
+
+        public string NoSetterValue { get; }
     }
 }

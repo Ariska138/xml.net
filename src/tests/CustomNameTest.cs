@@ -57,6 +57,7 @@ namespace Xml.Net.Tests
 
             Assert.Throws<ArgumentException>("keyName", () => new XmlConvertKeyValueElementAttribute("", "hello")); //Key name is empty
             Assert.Throws<ArgumentException>("keyName", () => new XmlConvertKeyValueElementAttribute("  ", "hello")); //Key name is whitespace
+
             Assert.Throws<ArgumentException>("valueName", () => new XmlConvertKeyValueElementAttribute("hello", "")); //Value name is empty
             Assert.Throws<ArgumentException>("valueName", () => new XmlConvertKeyValueElementAttribute("hello", "  ")); //Value name is whitespace
         }
@@ -71,7 +72,7 @@ namespace Xml.Net.Tests
             Assert.Equal("AttributeIdentifier", element.Name);
             Assert.Equal("name", element.Element("CustomElementIdentifier").Value);
 
-            XmlConvertTest.SerializeDeserializeObject_Equal_Success(ano); //Make sure we can deserialize custom parameters
+            XmlConvertTest.SerializeDeserializeObject_Equal_Success(ano, XmlConvertOptions.None); //Make sure we can deserialize custom parameters
         }
 
         [Fact]
@@ -128,7 +129,7 @@ namespace Xml.Net.Tests
             Assert.Equal(3, keyElements.Count);
             Assert.Equal(3, valueElements.Count);
 
-            XmlConvertTest.SerializeDeserializeObject_Equal_Success(cnco);
+            XmlConvertTest.SerializeDeserializeObject_Equal_Success(cnco, XmlConvertOptions.None);
         }
     }
 }
