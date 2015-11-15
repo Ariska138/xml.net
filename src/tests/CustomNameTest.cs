@@ -98,7 +98,7 @@ namespace Xml.Net.Tests
         [Fact]
         public static void SerializeDeserialize_CustomNamedCollection_Success()
         {
-            CustomNameCollectionObject ino = new CustomNameCollectionObject(new Collection<string>
+            CustomNameCollectionObject cnco = new CustomNameCollectionObject(new Collection<string>
             {
                 "1",
                 "2",
@@ -110,9 +110,25 @@ namespace Xml.Net.Tests
                 { "c", "3" },
             });
 
-            XElement element = XmlConvert.SerializeXElement(ino);
+            XElement element = XmlConvert.SerializeXElement(cnco);
 
-            //Assert.Equal("InterfaceIdentifier", element.Name);
+            XElement collectionElement = element.Element("CollectionValue");
+            List<XElement> collectionElements = new List<XElement>(collectionElement.Elements("CollectionElement"));
+
+            Assert.Equal(3, collectionElements.Count);
+
+            XElement dictionaryElement = element.Element("DictionaryValue");
+            List<XElement> dictionaryElements = new List<XElement>(dictionaryElement.Elements("DictionaryElement"));
+
+            Assert.Equal(3, dictionaryElements.Count);
+
+            List<XElement> keyElements = new List<XElement>(dictionaryElements.Elements("DictionaryKey"));
+            List<XElement> valueElements = new List<XElement>(dictionaryElements.Elements("DictionaryKey"));
+
+            Assert.Equal(3, keyElements.Count);
+            Assert.Equal(3, valueElements.Count);
+
+            XmlConvertTest.SerializeDeserializeObject_Equal_Success(cnco);
         }
     }
 }

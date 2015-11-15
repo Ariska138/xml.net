@@ -132,7 +132,8 @@ namespace Xml.Net.Tests
 
             Assert.Equal(obj1, obj2);
 
-            try {
+            try
+            {
                 //Test XmlSerializer
                 Console.WriteLine("XmlSerializer");
                 TimeAction(() =>
@@ -161,6 +162,7 @@ namespace Xml.Net.Tests
             catch (InvalidOperationException)
             {
                 //Error using XmlSerializer
+                Console.WriteLine("Could not serialize or deserialize.");
             }
         }
 
