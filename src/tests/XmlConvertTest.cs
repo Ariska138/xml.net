@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -14,7 +15,6 @@ namespace Xml.Net.Tests
     {
         public static void Main(string[] args)
         {
-            SerializeDeserialize_AdvancedObject_Success();
             CustomNameTest.SerializeDeserialize_CustomNamedCollection_Success();
             Console.ReadLine();
         }
@@ -102,6 +102,15 @@ namespace Xml.Net.Tests
             Assert.Throws<ArgumentNullException>("value", () => XmlConvert.SerializeObject(null)); //Object is null
         }
 
+        [Fact]
+        public static void DeserializeObject_Invalid()
+        {
+            Assert.Throws<ArgumentNullException>("type", () => XmlConvert.DeserializeObject(null, "<xml></xml>")); //Type is null
+            Assert.Throws<ArgumentNullException>("xml", () => XmlConvert.DeserializeObject(typeof(string), null)); //Xml is null
+
+            Assert.Throws<XmlException>(() => XmlConvert.DeserializeObject(typeof(string), "hello")); //Xml is invalid
+        }
+
         public static void SerializeDeserializeObject_Equal_Success<T>(T obj1) where T : new()
         {
             T obj2 = default(T);
@@ -123,30 +132,36 @@ namespace Xml.Net.Tests
 
             Assert.Equal(obj1, obj2);
 
-            //Test XmlSerializer
-            Console.WriteLine("XmlSerializer");
-            TimeAction(() =>
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(obj1.GetType());
-
-                using (StringWriter textWriter = new StringWriter())
+            try {
+                //Test XmlSerializer
+                Console.WriteLine("XmlSerializer");
+                TimeAction(() =>
                 {
-                    xmlSerializer.Serialize(textWriter, obj1);
-                    xml = textWriter.ToString();
-                }
-            });
+                    XmlSerializer xmlSerializer = new XmlSerializer(obj1.GetType());
 
-            TimeAction(() =>
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(obj1.GetType());
+                    using (StringWriter textWriter = new StringWriter())
+                    {
+                        xmlSerializer.Serialize(textWriter, obj1);
+                        xml = textWriter.ToString();
+                    }
+                });
 
-                using (StringReader textReader = new StringReader(xml))
+                TimeAction(() =>
                 {
-                    obj2 = (T)xmlSerializer.Deserialize(textReader);
-                }
-            });
+                    XmlSerializer xmlSerializer = new XmlSerializer(obj1.GetType());
 
-            Assert.Equal(obj1, obj2);
+                    using (StringReader textReader = new StringReader(xml))
+                    {
+                        obj2 = (T)xmlSerializer.Deserialize(textReader);
+                    }
+                });
+
+                Assert.Equal(obj1, obj2);
+            }
+            catch (InvalidOperationException)
+            {
+                //Error using XmlSerializer
+            }
         }
 
         private static void TimeAction(Action action)

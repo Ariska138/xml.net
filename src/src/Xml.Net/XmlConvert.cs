@@ -66,48 +66,48 @@ namespace Xml.Net
         /// Deserializes the XML string to the specified .NET type.
         /// </summary>
         /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
-        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="xml">The XML string to deserialize.</param>
         /// <returns>The deserialized object from the XML string.</returns>
-        public static T DeserializeObject<T>(string value) where T : new()
+        public static T DeserializeObject<T>(string xml) where T : new()
         {
-            return DeserializeObject<T>(value, DefaultConvertOptions);
+            return DeserializeObject<T>(xml, DefaultConvertOptions);
         }
 
         /// <summary>
         /// Deserializes the XML string to the specified .NET type using options.
         /// </summary>
         /// <typeparam name="T">The type of the deserialized .NET object.</typeparam>
-        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="xml">The XML string to deserialize.</param>
         /// <param name="options">Indicates how the output is deserialized.</param>
         /// <returns>The deserialized object from the XML string.</returns>
-        public static T DeserializeObject<T>(string value, XmlConvertOptions options) where T : new()
+        public static T DeserializeObject<T>(string xml, XmlConvertOptions options) where T : new()
         {
-            return (T)DeserializeObject(typeof(T), value, options);
+            return (T)DeserializeObject(typeof(T), xml, options);
         }
 
         /// <summary>
         /// Deserializes the XML string to the specified .NET type.
         /// </summary>
         /// <param name="type">The type of the deserialized .NET object.</param>
-        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="xml">The XML string to deserialize.</param>
         /// <returns>The deserialized object from the XML string.</returns>
-        public static object DeserializeObject(Type type, string value)
+        public static object DeserializeObject(Type type, string xml)
         {
-            return DeserializeObject(type, value, DefaultConvertOptions);
+            return DeserializeObject(type, xml, DefaultConvertOptions);
         }
 
         /// <summary>
         /// Deserializes the XML string to the specified .NET type using options.
         /// </summary>
         /// <param name="type">The type of the deserialized .NET object.</param>
-        /// <param name="value">The XML string to deserialize.</param>
+        /// <param name="xml">The XML string to deserialize.</param>
         /// <param name="options">Indicates how the output is deserialized.</param>
         /// <returns>The deserialized object from the XML string.</returns>
-        public static object DeserializeObject(Type type, string value, XmlConvertOptions options)
+        public static object DeserializeObject(Type type, string xml, XmlConvertOptions options)
         {
-            if (value == null) { throw new ArgumentNullException(nameof(value)); }
+            if (xml == null) { throw new ArgumentNullException(nameof(xml)); }
 
-            return DeserializeXElement(type, XElement.Parse(value), options);
+            return DeserializeXElement(type, XElement.Parse(xml), options);
         }
 
         /// <summary>

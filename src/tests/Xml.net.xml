@@ -119,7 +119,7 @@
             Deserializes the XML string to the specified .NET type.
             </summary>
             <typeparam name="T">The type of the deserialized .NET object.</typeparam>
-            <param name="value">The XML string to deserialize.</param>
+            <param name="xml">The XML string to deserialize.</param>
             <returns>The deserialized object from the XML string.</returns>
         </member>
         <member name="M:Xml.Net.XmlConvert.DeserializeObject``1(System.String,Xml.Net.XmlConvertOptions)">
@@ -127,7 +127,7 @@
             Deserializes the XML string to the specified .NET type using options.
             </summary>
             <typeparam name="T">The type of the deserialized .NET object.</typeparam>
-            <param name="value">The XML string to deserialize.</param>
+            <param name="xml">The XML string to deserialize.</param>
             <param name="options">Indicates how the output is deserialized.</param>
             <returns>The deserialized object from the XML string.</returns>
         </member>
@@ -136,7 +136,7 @@
             Deserializes the XML string to the specified .NET type.
             </summary>
             <param name="type">The type of the deserialized .NET object.</param>
-            <param name="value">The XML string to deserialize.</param>
+            <param name="xml">The XML string to deserialize.</param>
             <returns>The deserialized object from the XML string.</returns>
         </member>
         <member name="M:Xml.Net.XmlConvert.DeserializeObject(System.Type,System.String,Xml.Net.XmlConvertOptions)">
@@ -144,7 +144,7 @@
             Deserializes the XML string to the specified .NET type using options.
             </summary>
             <param name="type">The type of the deserialized .NET object.</param>
-            <param name="value">The XML string to deserialize.</param>
+            <param name="xml">The XML string to deserialize.</param>
             <param name="options">Indicates how the output is deserialized.</param>
             <returns>The deserialized object from the XML string.</returns>
         </member>
@@ -228,8 +228,8 @@
             <summary>
             Initializes a new instance of the <see cref="T:Xml.Net.XmlConvertKeyValueElementAttribute"/> class with a key name and a value name.
             </summary>
-            <param name="name">The custom name of the key of a dictionary element when serialized into XML.</param>
-            <param name="name">The custom name of the value of a dictionary element when serialized into XML.</param>
+            <param name="keyName">The custom name of the key of a dictionary element when serialized into XML.</param>
+            <param name="valueName">The custom name of the value of a dictionary element when serialized into XML.</param>
         </member>
         <member name="P:Xml.Net.XmlConvertKeyValueElementAttribute.KeyName">
             <summary>

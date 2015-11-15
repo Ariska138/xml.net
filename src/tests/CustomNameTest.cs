@@ -53,12 +53,12 @@ namespace Xml.Net.Tests
         public static void Ctor_KeyNameValueName_Invalid()
         {
             Assert.Throws<ArgumentNullException>("keyName", () => new XmlConvertKeyValueElementAttribute(null, "hello")); //Key name is null
-            Assert.Throws<ArgumentNullException>("keyName", () => new XmlConvertKeyValueElementAttribute("hello", null)); //Value name is null
+            Assert.Throws<ArgumentNullException>("valueName", () => new XmlConvertKeyValueElementAttribute("hello", null)); //Value name is null
 
-            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("", "hello")); //Key name is empty
-            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("  ", "hello")); //Key name is whitespace
-            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("hello", "")); //Value name is empty
-            Assert.Throws<ArgumentException>("name", () => new XmlConvertKeyValueElementAttribute("hello", "  ")); //Key name is whitespace
+            Assert.Throws<ArgumentException>("keyName", () => new XmlConvertKeyValueElementAttribute("", "hello")); //Key name is empty
+            Assert.Throws<ArgumentException>("keyName", () => new XmlConvertKeyValueElementAttribute("  ", "hello")); //Key name is whitespace
+            Assert.Throws<ArgumentException>("valueName", () => new XmlConvertKeyValueElementAttribute("hello", "")); //Value name is empty
+            Assert.Throws<ArgumentException>("valueName", () => new XmlConvertKeyValueElementAttribute("hello", "  ")); //Value name is whitespace
         }
 
         [Fact]

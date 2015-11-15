@@ -11,15 +11,15 @@ namespace Xml.Net
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlConvertKeyValueElementAttribute"/> class with a key name and a value name.
         /// </summary>
-        /// <param name="name">The custom name of the key of a dictionary element when serialized into XML.</param>
-        /// <param name="name">The custom name of the value of a dictionary element when serialized into XML.</param>
+        /// <param name="keyName">The custom name of the key of a dictionary element when serialized into XML.</param>
+        /// <param name="valueName">The custom name of the value of a dictionary element when serialized into XML.</param>
         public XmlConvertKeyValueElementAttribute(string keyName, string valueName)
         {
-            if (keyName == null) { throw new ArgumentNullException(nameof(valueName)); }
-            if (keyName.Length == 0) { throw new ArgumentException("The dictionary key element name cannot be empty"); }
+            if (keyName == null) { throw new ArgumentNullException(nameof(keyName)); }
+            if (string.IsNullOrWhiteSpace(keyName)) { throw new ArgumentException("The dictionary key element name cannot be empty", nameof(keyName)); }
 
             if (valueName == null) { throw new ArgumentNullException(nameof(valueName)); }
-            if (valueName.Length == 0) { throw new ArgumentException("The dictionary value element name cannot be empty"); }
+            if (string.IsNullOrWhiteSpace(valueName)) { throw new ArgumentException("The dictionary value element name cannot be empty", nameof(valueName)); }
 
             KeyName = keyName;
             ValueName = valueName;

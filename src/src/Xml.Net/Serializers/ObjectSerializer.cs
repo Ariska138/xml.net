@@ -131,9 +131,6 @@ namespace Xml.Net.Serializers
         /// <returns>The deserialized object from the XElement.</returns>
         public static object DeserializeObject(Type type, XElement element, XmlConvertOptions options)
         {
-            if (type == null) { throw new ArgumentNullException(nameof(type)); }
-            if (element == null) { throw new ArgumentNullException(nameof(element)); }
-
             var value = Activator.CreateInstance(type);
             var identifier = Utilities.GetIdentifier(value);
 

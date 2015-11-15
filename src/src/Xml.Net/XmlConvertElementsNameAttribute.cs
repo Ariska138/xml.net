@@ -15,7 +15,7 @@ namespace Xml.Net
         public XmlConvertElementsNameAttribute(string name)
         {
             if (name == null) { throw new ArgumentNullException(nameof(name)); }
-            if (string.IsNullOrWhiteSpace(name)) { throw new ArgumentException("The collection element name cannot be empty"); }
+            if (string.IsNullOrWhiteSpace(name)) { throw new ArgumentException("The collection element name cannot be empty", nameof(name)); }
 
             Name = name;
         }
