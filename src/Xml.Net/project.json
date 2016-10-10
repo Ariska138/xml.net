@@ -3,7 +3,7 @@
   "title": "Xml.Net",
   "packOptions": {
     "summary": "A high performance XML serialization library for .NET applications",
-    "tags": [ "xml xml.net serialization serializer xmlserializer" ],
+    "tags": [ "xml", "xml.net", "serialization", "serializer", "xmlserializer" ],
     "projectUrl": "https://github.com/hughbe/xml.net",
     "licenseUrl": "https://raw.githubusercontent.com/hughbe/xml.net/master/LICENSE",
     "repository": {
