@@ -1,0 +1,26 @@
+os: Visual Studio 2015
+configuration: Release
+
+environment:
+  matrix:
+    - FRAMEWORK: net451
+      LIBFRAMEWORK: net451
+    - FRAMEWORK: netcoreapp1
+      LIBFRAMEWORK: netstandard1.0
+
+before_build:
+  - dotnet --info
+  - dotnet restore
+
+build_script:
+  - ps: dotnet build -c Release -f $env:LIBFRAMEWORK src/Xml.Net.
+  - ps: dotnet build -c Release -f $env:FRAMEWORK src/Xml.Net.Tests
+
+test_script:
+  - ps: dotnet test src/Xml.Net.Tests/project.json -c Release -f $env:Framework
+
+after_test:
+  - ps: dotnet pack -c Release src/Xml.Net
+
+artifacts:
+  path: 'src/Xml.Net/bin/Release/*.nupkg'

@@ -1,4 +1,6 @@
 # Xml.Net
+[![Build status](https://ci.appveyor.com/api/projects/status/q2qk5wxdvt1dty0v/branch/master?svg=true)](https://ci.appveyor.com/project/hughbe/xml-net/branch/master)[![Travis Build Status](https://travis-ci.org/hughbe/xml.net.svg?branch=master)](https://travis-ci.org/hughbe/xml.net)
+
 A high performance XML serialization library for .NET applications
 
 #Example Use
