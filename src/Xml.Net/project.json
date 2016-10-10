@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.6",
+  "title": "Xml.Net",
+  "packOptions": {
+    "summary": "A high performance XML serialization library for .NET applications",
+    "tags": [ "xml xml.net serialization serializer xmlserializer" ],
+    "projectUrl": "https://github.com/hughbe/xml.net",
+    "licenseUrl": "https://raw.githubusercontent.com/hughbe/xml.net/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/hughbe/xml.net"
+    }
+  },
+  "description": "A high performance XML serialization library for .NET applications",
+  "authors": [ "Hugh Bellamy" ],
+  "copyright": "(C) Hugh Bellamy 2016",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0"
+  },
+
+  "frameworks": {
+    "netstandard1.0": {}
+  }
+}

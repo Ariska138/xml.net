@@ -19,24 +19,10 @@ namespace Xml.Net.Tests
         public override bool Equals(object obj)
         {
             BasicObject bo = (BasicObject)obj;
-
-            if (bo == null)
-            {
-                return false;
-            }
-
-            if (StringValue == null && bo.StringValue == null)
-            {
-                return true;
-            }
-
-            return StringValue != null && StringValue.Equals(bo.StringValue);
+            return bo != null && StringValue == bo.StringValue;
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
         
     public class EmbeddedObject
@@ -67,10 +53,7 @@ namespace Xml.Net.Tests
             return BasicObjectValue != null && BasicObjectValue.Equals(eo.BasicObjectValue);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public class AdvancedObject
@@ -110,10 +93,7 @@ namespace Xml.Net.Tests
                 EmbeddedObjectValue != null && EmbeddedObjectValue.Equals(ao.EmbeddedObjectValue);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public class PrimitiveObject
@@ -174,13 +154,8 @@ namespace Xml.Net.Tests
                 return false;
             }
 
-            if (StringValue == null && po.StringValue == null)
-            {
-                return true;
-            }
-
             return 
-                StringValue != null && StringValue == po.StringValue &&
+                StringValue == po.StringValue &&
                 CharValue == po.CharValue &&
                 SByteValue == po.SByteValue &&
                 ShortValue == po.ShortValue &&
@@ -197,10 +172,7 @@ namespace Xml.Net.Tests
                 DateTimeValue == DateTimeValue;
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public class CollectionObject
@@ -240,10 +212,7 @@ namespace Xml.Net.Tests
                 DictionaryValue != null && DictionaryValue.Count.Equals(co.DictionaryValue.Count);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public class ICollectionObject
@@ -278,18 +247,13 @@ namespace Xml.Net.Tests
                 IDictionaryValue != null && IDictionaryValue.Count.Equals(ico.IDictionaryValue.Count);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     [XmlConvertCustomElement("AttributeIdentifier")]
     public class AttributeNamedObject
     {
-        public AttributeNamedObject()
-        {
-        }
+        public AttributeNamedObject() { }
 
         public AttributeNamedObject(string stringValue)
         {
@@ -302,24 +266,10 @@ namespace Xml.Net.Tests
         public override bool Equals(object obj)
         {
             AttributeNamedObject anc = (AttributeNamedObject)obj;
-
-            if (anc == null)
-            {
-                return false;
-            }
-
-            if (StringValue == null && anc.StringValue == null)
-            {
-                return true;
-            }
-
-            return StringValue != null && StringValue.Equals(anc.StringValue);
+            return anc != null && StringValue == anc.StringValue;
         }
 
-        public override int GetHashCode()
-        {
-            return StringValue.GetHashCode();
-        }
+        public override int GetHashCode() => StringValue.GetHashCode();
     }
 
     public class InterfaceNamedObject : IXmlConvertible
@@ -370,17 +320,12 @@ namespace Xml.Net.Tests
                 DictionaryValue != null && DictionaryValue.Count.Equals(co.DictionaryValue.Count);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 
     public class IgnoredPropertyObject
     {
-        public IgnoredPropertyObject()
-        {
-        }
+        public IgnoredPropertyObject() { }
 
         [XmlConvertIgnored]
         public string IgnoredValue { get; set; }
